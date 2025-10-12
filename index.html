@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Securedly - Complete Security Suite</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --primary: #58a6ff;
+            --primary-dark: #1f6feb;
+            --success: #3fb950;
+            --warning: #d29922;
+            --danger: #da3633;
+            --background: #0d1117;
+            --card-bg: #161b22;
+            --border: #30363d;
+            --text: #c9d1d9;
+            --text-light: #8b949e;
+            --text-white: #f0f6fc;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header & Navigation */
+        header {
+            background: var(--card-bg);
+            border-bottom: 1px solid var(--border);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+        }
+        
+        .logo i {
+            font-size: 1.8rem;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+        
+        .nav-links a {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+        
+        .nav-links a.active {
+            color: var(--primary);
+        }
+        
+        /* Hero Section */
+        .hero {
+            padding: 140px 0 80px;
+            text-align: center;
+            background: linear-gradient(135deg, var(--background) 0%, #0a0d12 100%);
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--text-white), var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.2;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            max-width: 700px;
+            margin: 0 auto 2rem;
+        }
+        
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: var(--text);
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 500;
+            border: 2px solid var(--border);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .btn-warning {
+            background: linear-gradient(135deg, var(--warning), #e3b341);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .btn-primary:hover, .btn-secondary:hover, .btn-warning:hover {
+            transform: translateY(-2px);
+        }
+        
+        .btn-primary:hover {
+            box-shadow: 0 5px 15px rgba(88, 166, 255, 0.3);
+        }
+        
+        .btn-secondary:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+        
+        .btn-warning:hover {
+            box-shadow: 0 5px 15px rgba(210, 153, 34, 0.3);
+        }
+        
+        /* Services Section */
+        .section {
+            padding: 80px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            font-weight: 600;
+            color: var(--text-white);
+            margin-bottom: 1rem;
+        }
+        
+        .section-title p {
+            color: var(--text-light);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+        
+        .service-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 2.5rem;
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .service-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 2.2rem;
+        }
+        
+        .icon-password {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        }
+        
+        .icon-pwned {
+            background: linear-gradient(135deg, var(--warning), #e3b341);
+        }
+        
+        .icon-username {
+            background: linear-gradient(135deg, var(--success), #56d364);
+        }
+        
+        .service-card h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text-white);
+        }
+        
+        .service-card p {
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+        }
+        
+        .service-features {
+            list-style: none;
+            text-align: left;
+            margin-bottom: 2rem;
+        }
+        
+        .service-features li {
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .service-features i {
+            color: var(--success);
+        }
+        
+        /* Stats Section */
+        .stats {
+            background: var(--card-bg);
+            padding: 60px 0;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            text-align: center;
+        }
+        
+        .stat-item h3 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-item p {
+            color: var(--text-light);
+            font-weight: 500;
+        }
+        
+        /* How It Works */
+        .steps {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .step {
+            display: flex;
+            gap: 2rem;
+            align-items: flex-start;
+        }
+        
+        .step-number {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+        
+        .step-content h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-white);
+        }
+        
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, var(--card-bg) 0%, #1c2128 100%);
+            text-align: center;
+            padding: 80px 0;
+            border-radius: 20px;
+            margin: 40px 0;
+        }
+        
+        .cta-section h2 {
+            font-size: 2.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text-white);
+        }
+        
+        .cta-section p {
+            color: var(--text-light);
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--card-bg);
+            border-top: 1px solid var(--border);
+            padding: 60px 0 30px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-column h3 {
+            color: var(--text-white);
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+        
+        /* Mobile Navigation */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: var(--card-bg);
+                flex-direction: column;
+                padding: 1rem;
+                border-top: 1px solid var(--border);
+            }
+            
+            .nav-links.active {
+                display: flex;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .step {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav>
+                <a href="index.html" class="logo">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>Securedly</span>
+                </a>
+                
+                <ul class="nav-links">
+                    <li><a href="index.html" class="active">Home</a></li>
+                    <li><a href="password.html">Password Generator</a></li>
+                    <li><a href="pwned.html">Have I Been Pwned</a></li>
+                    <li><a href="username.html">Username Generator</a></li>
+                    <li><a href="#about">About</a></li>
+                </ul>
+                
+                <button class="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Complete Security Suite for Your Digital Life</h1>
+            <p>Securedly offers a comprehensive set of tools to protect your online identity. Generate secure passwords, check if your accounts have been compromised, and create unique usernames—all in one place.</p>
+            <div class="hero-buttons">
+                <a href="password.html" class="btn-primary">
+                    <i class="fas fa-key"></i> Password Generator
+                </a>
+                <a href="pwned.html" class="btn-warning">
+                    <i class="fas fa-shield-halved"></i> Check Pwned Accounts
+                </a>
+                <a href="username.html" class="btn-secondary">
+                    <i class="fas fa-user"></i> Username Generator
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Our Security Tools</h2>
+                <p>Three powerful tools to enhance your online security and privacy</p>
+            </div>
+            
+            <div class="services-grid">
+                <!-- Password Generator Card -->
+                <div class="service-card">
+                    <div class="service-icon icon-password">
+                        <i class="fas fa-key"></i>
+                    </div>
+                    <h3>Password Generator</h3>
+                    <p>Create ultra-secure, unpredictable passwords using advanced entropy collection and cryptographic algorithms.</p>
+                    
+                    <ul class="service-features">
+                        <li><i class="fas fa-check"></i> Device fingerprinting for unique entropy</li>
+                        <li><i class="fas fa-check"></i> Mathematical chaos algorithms</li>
+                        <li><i class="fas fa-check"></i> SHA-512 cryptographic hashing</li>
+                        <li><i class="fas fa-check"></i> Up to 256 character passwords</li>
+                        <li><i class="fas fa-check"></i> Real-time strength analysis</li>
+                    </ul>
+                    
+                    <a href="password.html" class="btn-primary">
+                        <i class="fas fa-bolt"></i> Generate Passwords
+                    </a>
+                </div>
+                
+                <!-- Have I Been Pwned Card -->
+                <div class="service-card">
+                    <div class="service-icon icon-pwned">
+                        <i class="fas fa-shield-halved"></i>
+                    </div>
+                    <h3>Have I Been Pwned</h3>
+                    <p>Check if your email or username has been compromised in data breaches. Secure your accounts before it's too late.</p>
+                    
+                    <ul class="service-features">
+                        <li><i class="fas fa-check"></i> Check emails against known breaches</li>
+                        <li><i class="fas fa-check"></i> Verify username security</li>
+                        <li><i class="fas fa-check"></i> Get detailed breach information</li>
+                        <li><i class="fas fa-check"></i> Receive security recommendations</li>
+                        <li><i class="fas fa-check"></i> Monitor multiple accounts</li>
+                    </ul>
+                    
+                    <a href="pwned.html" class="btn-warning">
+                        <i class="fas fa-search"></i> Check Accounts
+                    </a>
+                </div>
+                
+                <!-- Username Generator Card -->
+                <div class="service-card">
+                    <div class="service-icon icon-username">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <h3>Username Generator</h3>
+                    <p>Create unique, memorable usernames that protect your identity while maintaining personality and availability.</p>
+                    
+                    <ul class="service-features">
+                        <li><i class="fas fa-check"></i> Customizable username styles</li>
+                        <li><i class="fas fa-check"></i> Check availability across platforms</li>
+                        <li><i class="fas fa-check"></i> Personalization options</li>
+                        <li><i class="fas fa-check"></i> Brand-appropriate suggestions</li>
+                        <li><i class="fas fa-check"></i> Export and save favorites</li>
+                    </ul>
+                    
+                    <a href="username.html" class="btn-secondary">
+                        <i class="fas fa-magic"></i> Generate Usernames
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <h3>1K+</h3>
+                    <p>Passwords Generated</p>
+                </div>
+                <div class="stat-item">
+                    <h3>250+</h3>
+                    <p>Breaches Checked</p>
+                </div>
+                <div class="stat-item">
+                    <h3>500+</h3>
+                    <p>Usernames Created</p>
+                </div>
+                <div class="stat-item">
+                    <h3>99.9%</h3>
+                    <p>User Satisfaction</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section id="how-it-works" class="section">
+        <div class="container">
+            <div class="section-title">
+                <h2>How Securedly Works</h2>
+                <p>Our advanced security approach ensures maximum protection for your digital identity</p>
+            </div>
+            
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3>Advanced Entropy Collection</h3>
+                        <p>We gather hundreds of unique device and browser variables—screen size, CPU cores, memory, timezone, and more—to create a truly unique starting point for password generation.</p>
+                    </div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3>Mathematical Chaos Enhancement</h3>
+                        <p>Using sine, cosine, tangent, powers, and square roots, we introduce unpredictable complexity that makes each password generation completely unique, even on the same device.</p>
+                    </div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3>Cryptographic Security</h3>
+                        <p>All collected data is hashed with SHA-512 and combined with cryptographically secure random numbers, ensuring military-grade security for your passwords.</p>
+                    </div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h3>Comprehensive Security Checking</h3>
+                        <p>Our Have I Been Pwned integration checks your accounts against known data breaches, while our username generator helps create secure, available identities.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <h2>Ready to Secure Your Digital Life?</h2>
+            <p>Join hundreds of users who trust Securedly for their password security, breach monitoring, and username generation needs.</p>
+            <div class="hero-buttons">
+                <a href="password.html" class="btn-primary">
+                    <i class="fas fa-key"></i> Get Started Now
+                </a>
+                <a href="#how-it-works" class="btn-secondary">
+                    <i class="fas fa-info-circle"></i> Learn More
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Securedly</h3>
+                    <p>Your complete security suite for password generation, breach checking, and username creation.</p>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Tools</h3>
+                    <ul class="footer-links">
+                        <li><a href="password.html">Password Generator</a></li>
+                        <li><a href="pwned.html">Have I Been Pwned</a></li>
+                        <li><a href="username.html">Username Generator</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Company</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Connect</h3>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fab fa-twitter"></i> Twitter</a></li>
+                        <li><a href="#"><i class="fab fa-github"></i> GitHub</a></li>
+                        <li><a href="#"><i class="fab fa-discord"></i> Discord</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2025 Securedly. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
+            document.querySelector('.nav-links').classList.toggle('active');
+        });
+        
+        // Simple stats counter animation
+        document.addEventListener('DOMContentLoaded', function() {
+            const statItems = document.querySelectorAll('.stat-item h3');
+            
+            statItems.forEach(stat => {
+                const target = parseInt(stat.textContent);
+                let current = 0;
+                const increment = target / 50;
+                const timer = setInterval(() => {
+                    current += increment;
+                    if (current >= target) {
+                        current = target;
+                        clearInterval(timer);
+                    }
+                    stat.textContent = Math.floor(current).toLocaleString() + (stat.textContent.includes('%') ? '%' : '+');
+                }, 30);
+            });
+        });
+    </script>
+</body>
+</html>
