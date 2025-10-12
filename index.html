@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Securedly - Complete Security Suite</title>
+    <title>Securedly - Homepage</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
@@ -167,7 +167,20 @@
             gap: 8px;
         }
         
-        .btn-primary:hover, .btn-secondary:hover, .btn-warning:hover {
+        .btn-info {
+            background: linear-gradient(135deg, #58a6ff, #1f6feb);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .btn-primary:hover, .btn-secondary:hover, .btn-warning:hover, .btn-info:hover {
             transform: translateY(-2px);
         }
         
@@ -182,6 +195,10 @@
         
         .btn-warning:hover {
             box-shadow: 0 5px 15px rgba(210, 153, 34, 0.3);
+        }
+        
+        .btn-info:hover {
+            box-shadow: 0 5px 15px rgba(88, 166, 255, 0.3);
         }
         
         /* Services Section */
@@ -243,12 +260,16 @@
             background: linear-gradient(135deg, var(--primary), var(--primary-dark));
         }
         
-        .icon-pwned {
+        .icon-privacy {
             background: linear-gradient(135deg, var(--warning), #e3b341);
         }
         
         .icon-username {
             background: linear-gradient(135deg, var(--success), #56d364);
+        }
+        
+        .icon-encryption {
+            background: linear-gradient(135deg, #58a6ff, #1f6feb);
         }
         
         .service-card h3 {
@@ -474,9 +495,9 @@
                 <ul class="nav-links">
                     <li><a href="index.html" class="active">Home</a></li>
                     <li><a href="password.html">Password Generator</a></li>
-                    <li><a href="pwned.html">Have I Been Pwned</a></li>
+                    <li><a href="privacy.html">Privacy Checker</a></li>
                     <li><a href="username.html">Username Generator</a></li>
-                    <li><a href="#about">About</a></li>
+                    <li><a href="encryption.html">Data Encryption</a></li>
                 </ul>
                 
                 <button class="mobile-menu-btn">
@@ -489,17 +510,20 @@
     <!-- Hero Section -->
     <section class="hero">
         <div class="container">
-            <h1>Complete Security Suite for Your Digital Life</h1>
-            <p>Securedly offers a comprehensive set of tools to protect your online identity. Generate secure passwords, check if your accounts have been compromised, and create unique usernames—all in one place.</p>
+            <h1>Securedly is here!</h1>
+            <p>Securedly offers a comprehensive set of tools to protect your online identity. Generate secure passwords, check your privacy, create unique usernames, and encrypt sensitive data—all in one place.</p>
             <div class="hero-buttons">
                 <a href="password.html" class="btn-primary">
                     <i class="fas fa-key"></i> Password Generator
                 </a>
-                <a href="pwned.html" class="btn-warning">
-                    <i class="fas fa-shield-halved"></i> Check Pwned Accounts
+                <a href="privacy.html" class="btn-warning">
+                    <i class="fas fa-user-shield"></i> Privacy Checker
                 </a>
                 <a href="username.html" class="btn-secondary">
                     <i class="fas fa-user"></i> Username Generator
+                </a>
+                <a href="encryption.html" class="btn-info">
+                    <i class="fas fa-lock"></i> Data Encryption
                 </a>
             </div>
         </div>
@@ -510,7 +534,7 @@
         <div class="container">
             <div class="section-title">
                 <h2>Our Security Tools</h2>
-                <p>Three powerful tools to enhance your online security and privacy</p>
+                <p>Four powerful tools to enhance your online security and privacy</p>
             </div>
             
             <div class="services-grid">
@@ -535,24 +559,24 @@
                     </a>
                 </div>
                 
-                <!-- Have I Been Pwned Card -->
+                <!-- Privacy Checker Card -->
                 <div class="service-card">
-                    <div class="service-icon icon-pwned">
-                        <i class="fas fa-shield-halved"></i>
+                    <div class="service-icon icon-privacy">
+                        <i class="fas fa-user-shield"></i>
                     </div>
-                    <h3>Have I Been Pwned</h3>
-                    <p>Check if your email or username has been compromised in data breaches. Secure your accounts before it's too late.</p>
+                    <h3>Privacy Checker</h3>
+                    <p>Analyze your browser fingerprint and privacy settings. Get recommendations to enhance your online anonymity.</p>
                     
                     <ul class="service-features">
-                        <li><i class="fas fa-check"></i> Check emails against known breaches</li>
-                        <li><i class="fas fa-check"></i> Verify username security</li>
-                        <li><i class="fas fa-check"></i> Get detailed breach information</li>
-                        <li><i class="fas fa-check"></i> Receive security recommendations</li>
-                        <li><i class="fas fa-check"></i> Monitor multiple accounts</li>
+                        <li><i class="fas fa-check"></i> Browser fingerprint analysis</li>
+                        <li><i class="fas fa-check"></i> Privacy settings audit</li>
+                        <li><i class="fas fa-check"></i> Tracking detection</li>
+                        <li><i class="fas fa-check"></i> Personalized recommendations</li>
+                        <li><i class="fas fa-check"></i> Privacy score calculation</li>
                     </ul>
                     
-                    <a href="pwned.html" class="btn-warning">
-                        <i class="fas fa-search"></i> Check Accounts
+                    <a href="privacy.html" class="btn-warning">
+                        <i class="fas fa-search"></i> Check Privacy
                     </a>
                 </div>
                 
@@ -576,6 +600,27 @@
                         <i class="fas fa-magic"></i> Generate Usernames
                     </a>
                 </div>
+
+                <!-- Data Encryption Card -->
+                <div class="service-card">
+                    <div class="service-icon icon-encryption">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <h3>Data Encryption Tool</h3>
+                    <p>Encrypt and decrypt sensitive data using AES-256 encryption. Keep your messages and files secure with military-grade protection.</p>
+                    
+                    <ul class="service-features">
+                        <li><i class="fas fa-check"></i> AES-256 military-grade encryption</li>
+                        <li><i class="fas fa-check"></i> Text and file encryption/decryption</li>
+                        <li><i class="fas fa-check"></i> Password-based key derivation</li>
+                        <li><i class="fas fa-check"></i> Client-side processing only</li>
+                        <li><i class="fas fa-check"></i> Secure key generation</li>
+                    </ul>
+                    
+                    <a href="encryption.html" class="btn-info">
+                        <i class="fas fa-shield-alt"></i> Encrypt Data
+                    </a>
+                </div>
             </div>
         </div>
     </section>
@@ -589,16 +634,16 @@
                     <p>Passwords Generated</p>
                 </div>
                 <div class="stat-item">
-                    <h3>250+</h3>
-                    <p>Breaches Checked</p>
+                    <h3>500+</h3>
+                    <p>Privacy Checks</p>
                 </div>
                 <div class="stat-item">
-                    <h3>500+</h3>
+                    <h3>750+</h3>
                     <p>Usernames Created</p>
                 </div>
                 <div class="stat-item">
-                    <h3>99.9%</h3>
-                    <p>User Satisfaction</p>
+                    <h3>200+</h3>
+                    <p>Files Encrypted</p>
                 </div>
             </div>
         </div>
@@ -624,24 +669,24 @@
                 <div class="step">
                     <div class="step-number">2</div>
                     <div class="step-content">
-                        <h3>Mathematical Chaos Enhancement</h3>
-                        <p>Using sine, cosine, tangent, powers, and square roots, we introduce unpredictable complexity that makes each password generation completely unique, even on the same device.</p>
+                        <h3>Privacy-First Design</h3>
+                        <p>All tools run completely in your browser—no data is sent to servers. Your privacy and security are our top priorities in every tool we build.</p>
                     </div>
                 </div>
                 
                 <div class="step">
                     <div class="step-number">3</div>
                     <div class="step-content">
-                        <h3>Cryptographic Security</h3>
-                        <p>All collected data is hashed with SHA-512 and combined with cryptographically secure random numbers, ensuring military-grade security for your passwords.</p>
+                        <h3>Military-Grade Encryption</h3>
+                        <p>Our encryption tool uses AES-256, the same standard used by governments and security agencies worldwide to protect classified information.</p>
                     </div>
                 </div>
                 
                 <div class="step">
                     <div class="step-number">4</div>
                     <div class="step-content">
-                        <h3>Comprehensive Security Checking</h3>
-                        <p>Our Have I Been Pwned integration checks your accounts against known data breaches, while our username generator helps create secure, available identities.</p>
+                        <h3>Comprehensive Security Suite</h3>
+                        <p>From password generation to privacy analysis and data encryption, we provide all the essential tools you need for complete digital security.</p>
                     </div>
                 </div>
             </div>
@@ -652,7 +697,7 @@
     <section class="cta-section">
         <div class="container">
             <h2>Ready to Secure Your Digital Life?</h2>
-            <p>Join hundreds of users who trust Securedly for their password security, breach monitoring, and username generation needs.</p>
+            <p>Join hundreds of users who trust Securedly for their password security, privacy protection, and data encryption needs.</p>
             <div class="hero-buttons">
                 <a href="password.html" class="btn-primary">
                     <i class="fas fa-key"></i> Get Started Now
@@ -670,15 +715,16 @@
             <div class="footer-content">
                 <div class="footer-column">
                     <h3>Securedly</h3>
-                    <p>Your complete security suite for password generation, breach checking, and username creation.</p>
+                    <p>Your complete security suite for password generation, privacy checking, username creation, and data encryption.</p>
                 </div>
                 
                 <div class="footer-column">
                     <h3>Tools</h3>
                     <ul class="footer-links">
                         <li><a href="password.html">Password Generator</a></li>
-                        <li><a href="pwned.html">Have I Been Pwned</a></li>
+                        <li><a href="privacy.html">Privacy Checker</a></li>
                         <li><a href="username.html">Username Generator</a></li>
+                        <li><a href="encryption.html">Data Encryption</a></li>
                     </ul>
                 </div>
                 
