@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Privacy Policy - Securedly</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --primary: #58a6ff;
+            --primary-dark: #1f6feb;
+            --success: #3fb950;
+            --warning: #d29922;
+            --danger: #da3633;
+            --background: #0d1117;
+            --card-bg: #161b22;
+            --border: #30363d;
+            --text: #c9d1d9;
+            --text-light: #8b949e;
+            --text-white: #f0f6fc;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header & Navigation */
+        header {
+            background: var(--card-bg);
+            border-bottom: 1px solid var(--border);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+        }
+        
+        .logo i {
+            font-size: 1.8rem;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+        
+        .nav-links a {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+        
+        .nav-links a.active {
+            color: var(--primary);
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: transparent !important;
+            border: none !important;
+            color: var(--text) !important;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 8px 12px !important;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            box-shadow: none !important;
+            outline: none !important;
+        }
+        
+        .mobile-menu-btn:hover {
+            background: rgba(88, 166, 255, 0.1) !important;
+            color: var(--primary) !important;
+        }
+        
+        .mobile-menu-btn:focus {
+            outline: none !important;
+            box-shadow: none !important;
+        }
+        
+        .mobile-menu-btn i {
+            color: inherit !important;
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: var(--card-bg);
+                flex-direction: column;
+                padding: 1rem;
+                border-top: 1px solid var(--border);
+                z-index: 1001;
+            }
+            
+            .nav-links.active {
+                display: flex;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+                z-index: 1002;
+            }
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 140px 0 80px;
+            text-align: center;
+            background: linear-gradient(135deg, var(--background) 0%, #0a0d12 100%);
+        }
+        
+        .hero h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--text-white), var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.2;
+        }
+        
+        .hero p {
+            font-size: 1.1rem;
+            color: var(--text-light);
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            padding: 0 15px;
+        }
+        
+        .card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 2rem;
+            border: 1px solid var(--border);
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .card h2 {
+            color: var(--text-white);
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+            font-size: 1.6rem;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .policy-section {
+            margin-bottom: 2.5rem;
+        }
+        
+        .policy-section h3 {
+            color: var(--text-white);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .policy-section p {
+            color: var(--text-light);
+            margin-bottom: 1rem;
+            line-height: 1.7;
+        }
+        
+        .policy-section ul {
+            padding-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .policy-section li {
+            color: var(--text-light);
+            margin-bottom: 0.5rem;
+            line-height: 1.6;
+        }
+        
+        .highlight-box {
+            background: rgba(88, 166, 255, 0.1);
+            border-left: 4px solid var(--primary);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+        }
+        
+        .highlight-box h4 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+        
+        .highlight-box p {
+            color: var(--text-light);
+            margin-bottom: 0;
+        }
+        
+        footer {
+            background: var(--card-bg);
+            border-top: 1px solid var(--border);
+            padding: 40px 0 20px;
+            margin-top: 40px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-column h3 {
+            color: var(--text-white);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.6rem;
+        }
+        
+        .footer-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            font-size: 0.9rem;
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border);
+            color: var(--text-light);
+            font-size: 0.85rem;
+        }
+        
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .card {
+                padding: 1.5rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .hero {
+                padding: 120px 0 60px;
+            }
+            
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+            
+            .card {
+                padding: 1.25rem;
+                margin-bottom: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav>
+                <a href="index.html" class="logo">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>Securedly</span>
+                </a>
+                
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="password.html">Password Generator</a></li>
+                    <li><a href="privacycheck.html">Privacy Checker</a></li>
+                    <li><a href="username.html">Username Generator</a></li>
+                    <li><a href="encryption.html">Data Encryption</a></li>
+                </ul>
+                
+                <button class="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Privacy Policy</h1>
+            <p>Your privacy is our priority. Learn how Securedly protects your data and respects your digital rights.</p>
+        </div>
+    </section>
+
+    <div class="container">
+        <!-- Privacy Policy Card -->
+        <div class="card">
+            <h2><i class="fas fa-user-shield"></i> Our Commitment to Privacy</h2>
+            
+            <div class="highlight-box">
+                <h4>Zero Data Collection Policy</h4>
+                <p>Securedly operates on a strict zero-knowledge principle. We do not collect, store, or transmit any personal data or information processed through our tools.</p>
+            </div>
+            
+            <div class="policy-section">
+                <h3><i class="fas fa-info-circle"></i> Information We Don't Collect</h3>
+                <p>Unlike many online services, Securedly is designed with privacy as a core principle:</p>
+                <ul>
+                    <li>We do not collect passwords, usernames, or encrypted data</li>
+                    <li>We do not track your browsing activity or usage patterns</li>
+                    <li>We do not use cookies or tracking technologies</li>
+                    <li>We do not require account creation or personal information</li>
+                    <li>We do not store any data processed through our tools</li>
+                </ul>
+            </div>
+            
+            <div class="policy-section">
+                <h3><i class="fas fa-laptop-code"></i> How Our Tools Work</h3>
+                <p>All Securedly tools operate entirely within your browser:</p>
+                <ul>
+                    <li><strong>Password Generator:</strong> Creates passwords using local entropy sources without transmitting data</li>
+                    <li><strong>Privacy Checker:</strong> Analyzes your browser settings locally without sending information to servers</li>
+                    <li><strong>Username Generator:</strong> Generates usernames using client-side algorithms</li>
+                    <li><strong>Data Encryption:</strong> Encrypts and decrypts data locally using AES-256 without server communication</li>
+                </ul>
+            </div>
+            
+            <div class="policy-section">
+                <h3><i class="fas fa-server"></i> Technical Implementation</h3>
+                <p>Our privacy-first approach is built into our technical architecture:</p>
+                <ul>
+                    <li>All cryptographic operations happen client-side in your browser</li>
+                    <li>No data is transmitted to external servers during tool usage</li>
+                    <li>Our website is static with no backend database</li>
+                    <li>We use open-source libraries that respect privacy</li>
+                    <li>Code is publicly available for security community review</li>
+                </ul>
+            </div>
+            
+            <div class="policy-section">
+                <h3><i class="fas fa-external-link-alt"></i> Third-Party Services</h3>
+                <p>Securedly minimizes third-party dependencies:</p>
+                <ul>
+                    <li><strong>Fonts:</strong> We use Google Fonts which may collect limited usage data</li>
+                    <li><strong>Icons:</strong> Font Awesome icons are loaded from CDNJS</li>
+                    <li><strong>Hosting:</strong> Our static site is hosted on privacy-respecting infrastructure</li>
+                </ul>
+                <p>We recommend using browser extensions that block third-party trackers for enhanced privacy.</p>
+            </div>
+            
+            <div class="policy-section">
+                <h3><i class="fas fa-code-branch"></i> Open Source Transparency</h3>
+                <p>Securedly is fully open source:</p>
+                <ul>
+                    <li>All source code is publicly available for inspection</li>
+                    <li>Security researchers can audit our implementation</li>
+                    <li>Community contributions help improve security and privacy</li>
+                    <li>No hidden functionality or backdoors</li>
+                </ul>
+            </div>
+            
+            <div class="policy-section">
+                <h3><i class="fas fa-shield-alt"></i> Security Measures</h3>
+                <p>We implement multiple security layers to protect users:</p>
+                <ul>
+                    <li>HTTPS encryption for all website communications</li>
+                    <li>Content Security Policy headers to prevent XSS attacks</li>
+                    <li>Regular security updates and dependency reviews</li>
+                    <li>Secure coding practices and vulnerability testing</li>
+                </ul>
+            </div>
+            
+            <div class="policy-section">
+                <h3><i class="fas fa-balance-scale"></i> Legal Compliance</h3>
+                <p>Securedly complies with global privacy regulations:</p>
+                <ul>
+                    <li><strong>GDPR:</strong> Our zero-data collection approach naturally complies with EU data protection standards</li>
+                    <li><strong>CCPA:</strong> California consumers' privacy rights are respected by our data minimization</li>
+                    <li><strong>COPPA:</strong> We do not knowingly collect information from children under 13</li>
+                </ul>
+            </div>
+            
+            <div class="policy-section">
+                <h3><i class="fas fa-question-circle"></i> Your Rights</h3>
+                <p>Under our privacy policy, you maintain full control:</p>
+                <ul>
+                    <li>Right to access: All processing happens locally on your device</li>
+                    <li>Right to erasure: No data is stored, so nothing to delete</li>
+                    <li>Right to object: You can stop using our services at any time</li>
+                    <li>Right to data portability: You control all data generated</li>
+                </ul>
+            </div>
+            
+            <div class="policy-section">
+                <h3><i class="fas fa-sync-alt"></i> Policy Updates</h3>
+                <p>We may update this privacy policy to reflect:</p>
+                <ul>
+                    <li>Changes in our tools or services</li>
+                    <li>Legal or regulatory requirements</li>
+                    <li>Security improvements</li>
+                </ul>
+                <p>Continued use of Securedly after changes constitutes acceptance of the updated policy.</p>
+            </div>
+            
+            <div class="policy-section">
+                <h3><i class="fas fa-envelope"></i> Contact Information</h3>
+                <p>If you have questions about this privacy policy or our practices:</p>
+                <ul>
+                    <li>Visit our <a href="https://github.com/Atelloblue/Securedly">GitHub repository</a> for technical questions</li>
+                    <li>Use our contact form for general inquiries</li>
+                    <li>Report security vulnerabilities through responsible disclosure</li>
+                </ul>
+            </div>
+            
+            <div class="highlight-box">
+                <h4>Last Updated</h4>
+                <p>This privacy policy was last updated on October 16, 2025.</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Securedly</h3>
+                    <p>Your complete security suite for password generation, privacy checking, username creation, and data encryption.</p>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Tools</h3>
+                    <ul class="footer-links">
+                        <li><a href="password.html">Password Generator</a></li>
+                        <li><a href="privacycheck.html">Privacy Checker</a></li>
+                        <li><a href="username.html">Username Generator</a></li>
+                        <li><a href="encryption.html">Data Encryption</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Company</h3>
+                    <ul class="footer-links">
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                        <li><a href="terms.html">Terms of Service</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Connect</h3>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fab fa-twitter"></i> Twitter</a></li>
+                        <li><a href="https://github.com/Atelloblue/Securedly"><i class="fab fa-github"></i> GitHub</a></li>
+                        <li><a href="#"><i class="fab fa-discord"></i> Discord</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2025 Securedly. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
+            document.querySelector('.nav-links').classList.toggle('active');
+        });
+    </script>
+</body>
+</html>
