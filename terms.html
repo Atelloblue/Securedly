@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Securedly - Terms of Service</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --primary: #58a6ff;
+            --primary-dark: #1f6feb;
+            --success: #3fb950;
+            --warning: #d29922;
+            --danger: #da3633;
+            --background: #0d1117;
+            --card-bg: #161b22;
+            --border: #30363d;
+            --text: #c9d1d9;
+            --text-light: #8b949e;
+            --text-white: #f0f6fc;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header & Navigation */
+        header {
+            background: var(--card-bg);
+            border-bottom: 1px solid var(--border);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+        }
+        
+        .logo i {
+            font-size: 1.8rem;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+        
+        .nav-links a {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+        
+        .nav-links a.active {
+            color: var(--primary);
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: transparent !important;
+            border: none !important;
+            color: var(--text) !important;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 8px 12px !important;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            box-shadow: none !important;
+            outline: none !important;
+        }
+        
+        .mobile-menu-btn:hover {
+            background: rgba(88, 166, 255, 0.1) !important;
+            color: var(--primary) !important;
+        }
+        
+        .mobile-menu-btn:focus {
+            outline: none !important;
+            box-shadow: none !important;
+        }
+        
+        .mobile-menu-btn i {
+            color: inherit !important;
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: var(--card-bg);
+                flex-direction: column;
+                padding: 1rem;
+                border-top: 1px solid var(--border);
+                z-index: 1001;
+            }
+            
+            .nav-links.active {
+                display: flex;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+                z-index: 1002;
+            }
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 140px 0 80px;
+            text-align: center;
+            background: linear-gradient(135deg, var(--background) 0%, #0a0d12 100%);
+        }
+        
+        .hero h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--text-white), var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.2;
+        }
+        
+        .hero p {
+            font-size: 1.1rem;
+            color: var(--text-light);
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            padding: 0 15px;
+        }
+        
+        .card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 2rem;
+            border: 1px solid var(--border);
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .card h2 {
+            color: var(--text-white);
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+            font-size: 1.6rem;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .tos-section {
+            margin-bottom: 2.5rem;
+        }
+        
+        .tos-section h3 {
+            color: var(--text-white);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .tos-section p {
+            color: var(--text-light);
+            margin-bottom: 1rem;
+            line-height: 1.7;
+        }
+        
+        .tos-section ul {
+            padding-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .tos-section li {
+            color: var(--text-light);
+            margin-bottom: 0.5rem;
+            line-height: 1.6;
+        }
+        
+        .warning-box {
+            background: rgba(218, 51, 51, 0.1);
+            border-left: 4px solid var(--danger);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+        }
+        
+        .warning-box h4 {
+            color: var(--danger);
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+        
+        .warning-box p {
+            color: var(--text-light);
+            margin-bottom: 0;
+        }
+        
+        .info-box {
+            background: rgba(88, 166, 255, 0.1);
+            border-left: 4px solid var(--primary);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+        }
+        
+        .info-box h4 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+        
+        .info-box p {
+            color: var(--text-light);
+            margin-bottom: 0;
+        }
+        
+        footer {
+            background: var(--card-bg);
+            border-top: 1px solid var(--border);
+            padding: 40px 0 20px;
+            margin-top: 40px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-column h3 {
+            color: var(--text-white);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.6rem;
+        }
+        
+        .footer-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            font-size: 0.9rem;
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border);
+            color: var(--text-light);
+            font-size: 0.85rem;
+        }
+        
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .card {
+                padding: 1.5rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .hero {
+                padding: 120px 0 60px;
+            }
+            
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+            
+            .card {
+                padding: 1.25rem;
+                margin-bottom: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav>
+                <a href="index.html" class="logo">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>Securedly</span>
+                </a>
+                
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="password.html">Password Generator</a></li>
+                    <li><a href="privacycheck.html">Privacy Checker</a></li>
+                    <li><a href="username.html">Username Generator</a></li>
+                    <li><a href="encryption.html">Data Encryption</a></li>
+                </ul>
+                
+                <button class="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Terms of Service</h1>
+            <p>Please read these terms carefully before using Securedly's security tools and services.</p>
+        </div>
+    </section>
+
+    <div class="container">
+        <!-- Terms of Service Card -->
+        <div class="card">
+            <h2><i class="fas fa-gavel"></i> Legal Agreement</h2>
+            
+            <div class="info-box">
+                <h4>Acceptance of Terms</h4>
+                <p>By accessing and using Securedly, you acknowledge that you have read, understood, and agree to be bound by these Terms of Service.</p>
+            </div>
+            
+            <div class="tos-section">
+                <h3><i class="fas fa-user-check"></i> 1. Account Terms</h3>
+                <p>Securedly is designed to be used without account creation:</p>
+                <ul>
+                    <li>No user registration or personal information required</li>
+                    <li>All tools function anonymously and locally</li>
+                    <li>You are responsible for securing generated passwords and data</li>
+                    <li>We do not offer password recovery services (no accounts exist)</li>
+                </ul>
+            </div>
+            
+            <div class="tos-section">
+                <h3><i class="fas fa-tools"></i> 2. Service Description</h3>
+                <p>Securedly provides browser-based security tools:</p>
+                <ul>
+                    <li><strong>Password Generator:</strong> Creates cryptographically secure passwords</li>
+                    <li><strong>Privacy Checker:</strong> Analyzes browser privacy settings</li>
+                    <li><strong>Username Generator:</strong> Creates secure, anonymous usernames</li>
+                    <li><strong>Data Encryption:</strong> Provides client-side AES-256 encryption</li>
+                </ul>
+                <p>All tools operate entirely within your browser with no server-side processing.</p>
+            </div>
+            
+            <div class="tos-section">
+                <h3><i class="fas fa-exclamation-triangle"></i> 3. Acceptable Use</h3>
+                <p>You agree not to use Securedly for:</p>
+                <ul>
+                    <li>Illegal activities or unauthorized access to systems</li>
+                    <li>Generating passwords for malicious purposes</li>
+                    <li>Violating others' privacy or security</li>
+                    <li>Attempting to reverse engineer or compromise our services</li>
+                    <li>Automated scraping or excessive resource usage</li>
+                </ul>
+                
+                <div class="warning-box">
+                    <h4>Important Security Notice</h4>
+                    <p>Securedly tools are for legitimate security and privacy purposes only. Misuse may violate laws and result in termination of access.</p>
+                </div>
+            </div>
+            
+            <div class="tos-section">
+                <h3><i class="fas fa-balance-scale"></i> 4. Intellectual Property</h3>
+                <p>Securedly is open source software:</p>
+                <ul>
+                    <li>Source code is available under MIT License</li>
+                    <li>You may use, modify, and distribute the code</li>
+                    <li>Securedly branding and logos are proprietary</li>
+                    <li>Third-party libraries maintain their respective licenses</li>
+                </ul>
+            </div>
+            
+            <div class="tos-section">
+                <h3><i class="fas fa-shield-alt"></i> 5. Disclaimer of Warranties</h3>
+                <p>Securedly is provided "as is" without warranties:</p>
+                <ul>
+                    <li>We do not guarantee uninterrupted or error-free service</li>
+                    <li>Security tools are provided for informational purposes</li>
+                    <li>You assume all risk for data security decisions</li>
+                    <li>We are not liable for security breaches or data loss</li>
+                </ul>
+                
+                <div class="info-box">
+                    <h4>No Professional Advice</h4>
+                    <p>Securedly tools provide security assistance but do not constitute professional cybersecurity advice. Consult qualified professionals for critical security needs.</p>
+                </div>
+            </div>
+            
+            <div class="tos-section">
+                <h3><i class="fas fa-ban"></i> 6. Limitation of Liability</h3>
+                <p>To the fullest extent permitted by law:</p>
+                <ul>
+                    <li>Securedly shall not be liable for indirect, incidental, or consequential damages</li>
+                    <li>Total liability shall not exceed $100 USD</li>
+                    <li>We are not responsible for third-party actions or content</li>
+                    <li>Some jurisdictions do not allow liability limitations</li>
+                </ul>
+            </div>
+            
+            <div class="tos-section">
+                <h3><i class="fas fa-user-secret"></i> 7. Privacy and Data</h3>
+                <p>Our privacy practices are fundamental to our service:</p>
+                <ul>
+                    <li>We do not collect, store, or process personal data</li>
+                    <li>All tool operations happen locally in your browser</li>
+                    <li>No cookies or tracking technologies are used</li>
+                    <li>Third-party services (fonts, icons) have their own policies</li>
+                </ul>
+                <p>Please review our <a href="privacy.html" style="color: var(--primary);">Privacy Policy</a> for complete details.</p>
+            </div>
+            
+            <div class="tos-section">
+                <h3><i class="fas fa-code"></i> 8. Open Source</h3>
+                <p>Securedly embraces open source principles:</p>
+                <ul>
+                    <li>Full source code transparency</li>
+                    <li>Community contributions and audits welcome</li>
+                    <li>Security vulnerability reporting encouraged</li>
+                    <li>No hidden functionality or backdoors</li>
+                </ul>
+            </div>
+            
+            <div class="tos-section">
+                <h3><i class="fas fa-globe"></i> 9. Third-Party Services</h3>
+                <p>We use minimal third-party dependencies:</p>
+                <ul>
+                    <li>Google Fonts for typography</li>
+                    <li>Font Awesome for icons</li>
+                    <li>CDNJS for content delivery</li>
+                </ul>
+                <p>These services may have their own terms and privacy policies.</p>
+            </div>
+            
+            <div class="tos-section">
+                <h3><i class="fas fa-gavel"></i> 10. Termination</h3>
+                <p>We reserve the right to:</p>
+                <ul>
+                    <li>Modify or discontinue services at any time</li>
+                    <li>Restrict access for violation of these terms</li>
+                    <li>Update terms with notice to users</li>
+                </ul>
+            </div>
+            
+            <div class="tos-section">
+                <h3><i class="fas fa-sync-alt"></i> 11. Changes to Terms</h3>
+                <p>We may update these terms to reflect:</p>
+                <ul>
+                    <li>New features or services</li>
+                    <li>Legal or regulatory requirements</li>
+                    <li>Security improvements</li>
+                    <li>Community feedback</li>
+                </ul>
+                <p>Continued use after changes constitutes acceptance of updated terms.</p>
+            </div>
+            
+            <div class="tos-section">
+                <h3><i class="fas fa-balance-scale"></i> 12. Governing Law</h3>
+                <p>These terms are governed by:</p>
+                <ul>
+                    <li>Laws of the United States where applicable</li>
+                    <li>International copyright and intellectual property laws</li>
+                    <li>Open source licensing requirements</li>
+                </ul>
+            </div>
+            
+            <div class="tos-section">
+                <h3><i class="fas fa-envelope"></i> 13. Contact Information</h3>
+                <p>For questions about these terms:</p>
+                <ul>
+                    <li>Visit our GitHub repository for technical issues</li>
+                    <li>Use our contact form for legal inquiries</li>
+                    <li>Report violations through appropriate channels</li>
+                </ul>
+            </div>
+            
+            <div class="info-box">
+                <h4>Effective Date</h4>
+                <p>These Terms of Service are effective as of October 16, 2025.</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Securedly</h3>
+                    <p>Your complete security suite for password generation, privacy checking, username creation, and data encryption.</p>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Tools</h3>
+                    <ul class="footer-links">
+                        <li><a href="password.html">Password Generator</a></li>
+                        <li><a href="privacycheck.html">Privacy Checker</a></li>
+                        <li><a href="username.html">Username Generator</a></li>
+                        <li><a href="encryption.html">Data Encryption</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Company</h3>
+                    <ul class="footer-links">
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                        <li><a href="terms.html">Terms of Service</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Connect</h3>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fab fa-twitter"></i> Twitter</a></li>
+                        <li><a href="https://github.com/Atelloblue/Securedly"><i class="fab fa-github"></i> GitHub</a></li>
+                        <li><a href="#"><i class="fab fa-discord"></i> Discord</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2025 Securedly. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
+            document.querySelector('.nav-links').classList.toggle('active');
+        });
+    </script>
+</body>
+</html>
