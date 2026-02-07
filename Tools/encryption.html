@@ -1,0 +1,1313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Securedly - Data Encryption</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --primary: #58a6ff;
+            --primary-dark: #1f6feb;
+            --success: #3fb950;
+            --warning: #d29922;
+            --danger: #da3633;
+            --background: #0d1117;
+            --card-bg: #161b22;
+            --border: #30363d;
+            --text: #c9d1d9;
+            --text-light: #8b949e;
+            --text-white: #f0f6fc;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header & Navigation */
+        header {
+            background: var(--card-bg);
+            border-bottom: 1px solid var(--border);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+        }
+        
+        .logo i {
+            font-size: 1.8rem;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+        
+        .nav-links a {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            white-space: nowrap;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+        
+        .nav-links a.active {
+            color: var(--primary);
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: transparent !important;
+            border: none !important;
+            color: var(--text) !important;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 8px 12px !important;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            box-shadow: none !important;
+            outline: none !important;
+        }
+        
+        .mobile-menu-btn:hover {
+            background: rgba(88, 166, 255, 0.1) !important;
+            color: var(--primary) !important;
+        }
+        
+        .mobile-menu-btn:focus {
+            outline: none !important;
+            box-shadow: none !important;
+        }
+        
+        .mobile-menu-btn i {
+            color: inherit !important;
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: var(--card-bg);
+                flex-direction: column;
+                padding: 1rem;
+                border-top: 1px solid var(--border);
+                z-index: 1001;
+            }
+            
+            .nav-links.active {
+                display: flex;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+                z-index: 1002;
+            }
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 140px 0 80px;
+            text-align: center;
+            background: linear-gradient(135deg, var(--background) 0%, #0a0d12 100%);
+        }
+        
+        .hero h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--text-white), var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.2;
+        }
+        
+        .hero p {
+            font-size: 1.1rem;
+            color: var(--text-light);
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            padding: 0 15px;
+        }
+        
+        .card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 2rem;
+            border: 1px solid var(--border);
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .card h2 {
+            color: var(--text-white);
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+            font-size: 1.6rem;
+            text-align: center;
+        }
+        
+        .tab-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .tab-btn {
+            background: var(--background);
+            border: 2px solid var(--border);
+            color: var(--text);
+            padding: 0.8rem 1.5rem;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+        }
+        
+        .tab-btn.active {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            border-color: var(--primary);
+        }
+        
+        .tab-btn:hover:not(.active) {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--text-white);
+            font-size: 0.95rem;
+        }
+        
+        .input-group textarea {
+            width: 100%;
+            min-height: 120px;
+            background: var(--background);
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            padding: 1rem;
+            color: var(--text);
+            font-family: monospace;
+            resize: vertical;
+            transition: border-color 0.3s ease;
+            font-size: 0.9rem;
+        }
+        
+        .input-group textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+        
+        .input-group input {
+            width: 100%;
+            background: var(--background);
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            padding: 1rem;
+            color: var(--text);
+            transition: border-color 0.3s ease;
+            font-size: 0.9rem;
+        }
+        
+        .input-group input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+        
+        .file-input {
+            display: none;
+        }
+        
+        .file-input-label {
+            display: block;
+            background: var(--background);
+            border: 2px dashed var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .file-input-label:hover {
+            border-color: var(--primary);
+            background: rgba(88, 166, 255, 0.05);
+        }
+        
+        .file-input-label i {
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin-bottom: 0.8rem;
+        }
+        
+        .file-info {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: rgba(88, 166, 255, 0.1);
+            border-radius: 8px;
+            display: none;
+            font-size: 0.9rem;
+        }
+        
+        .file-info.visible {
+            display: block;
+        }
+        
+        .buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        button:not(.mobile-menu-btn):not(.tab-btn) {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(88, 166, 255, 0.3);
+        }
+        
+        button:not(.mobile-menu-btn):not(.tab-btn):hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(88, 166, 255, 0.4);
+        }
+        
+        button.secondary:not(.mobile-menu-btn) {
+            background: linear-gradient(135deg, var(--warning), #e3b341);
+            box-shadow: 0 4px 12px rgba(210, 153, 34, 0.3);
+        }
+        
+        button.secondary:not(.mobile-menu-btn):hover {
+            box-shadow: 0 6px 15px rgba(210, 153, 34, 0.4);
+        }
+        
+        button.success:not(.mobile-menu-btn) {
+            background: linear-gradient(135deg, var(--success), #56d364);
+            box-shadow: 0 4px 12px rgba(63, 185, 80, 0.3);
+        }
+        
+        button.copied:not(.mobile-menu-btn) {
+            background: linear-gradient(135deg, #3fb950, #2ea043);
+            box-shadow: 0 4px 12px rgba(63, 185, 80, 0.3);
+        }
+        
+        .result-container {
+            background: var(--background);
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-top: 2rem;
+            display: none;
+            position: relative;
+        }
+        
+        .result-container.visible {
+            display: block;
+        }
+        
+        .result-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .result-title {
+            font-weight: 600;
+            color: var(--text-white);
+            font-size: 1.1rem;
+        }
+        
+        .result-content {
+            font-family: monospace;
+            word-break: break-all;
+            white-space: pre-wrap;
+            font-size: 0.85rem;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        
+        .security-info {
+            background: rgba(88, 166, 255, 0.1);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .security-info h3 {
+            color: var(--text-white);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+        
+        .security-info ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .security-info li {
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+        }
+        
+        .security-info i {
+            color: var(--success);
+            margin-top: 0.2rem;
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        
+        .feature {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+        }
+        
+        .feature-icon {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            flex-shrink: 0;
+        }
+        
+        .feature-text h3 {
+            color: var(--text-white);
+            margin-bottom: 5px;
+            font-size: 1rem;
+        }
+        
+        .feature-text p {
+            color: var(--text-light);
+            font-size: 0.85rem;
+            line-height: 1.5;
+        }
+        
+footer {
+    background: var(--card-bg);
+    border-top: 1px solid var(--border);
+    padding: 60px 0 30px;
+    margin-top: 40px;
+}
+
+.footer-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.footer-column h3 {
+    color: var(--text-white);
+    margin-bottom: 1.5rem;
+    font-size: 1.2rem;
+}
+
+.footer-links {
+    list-style: none;
+}
+
+.footer-links li {
+    margin-bottom: 0.8rem;
+}
+
+.footer-links a {
+    color: var(--text-light);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-links a:hover {
+    color: var(--primary);
+}
+
+.copyright {
+    text-align: center;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border);
+    color: var(--text-light);
+    font-size: 0.9rem;
+}
+        
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 2rem;
+        }
+        
+        .loading.visible {
+            display: block;
+        }
+        
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(88, 166, 255, 0.3);
+            border-left: 4px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Password strength indicator */
+        .password-strength {
+            height: 6px;
+            border-radius: 3px;
+            margin-top: 8px;
+            background: var(--border);
+            overflow: hidden;
+        }
+        
+        .password-strength-bar {
+            height: 100%;
+            width: 0%;
+            transition: width 0.3s ease, background 0.3s ease;
+        }
+        
+        .password-strength-text {
+            font-size: 0.75rem;
+            margin-top: 4px;
+            text-align: right;
+        }
+        
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .card {
+                padding: 1.5rem;
+            }
+            
+            .card h2 {
+                font-size: 1.4rem;
+            }
+            
+            .tab-btn {
+                padding: 0.7rem 1.2rem;
+                font-size: 0.85rem;
+            }
+            
+            .result-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .buttons {
+                flex-direction: column;
+                width: 100%;
+            }
+            
+            button:not(.mobile-menu-btn):not(.tab-btn) {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav>
+                <a href="index.html" class="logo">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>Securedly</span>
+                </a>
+                
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="password.html">Password Generator</a></li>
+                    <li><a href="ipinfo.html">IP Information</a></li>
+                    <li><a href="username.html">Username Generator</a></li>
+                    <li><a href="encryption.html" class="active">Data Encryption</a></li>
+                </ul>
+                
+                <button class="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Military-Grade Data Encryption</h1>
+            <p>Encrypt and decrypt sensitive data using AES-256 encryption. All processing happens in your browser - your data never leaves your device.</p>
+        </div>
+    </section>
+
+    <div class="container">
+        <div class="card">
+            <h2>Encrypt & Decrypt Data</h2>
+            
+            <div class="tab-buttons">
+                <button class="tab-btn active" data-tab="text">
+                    <i class="fas fa-font"></i> Text Encryption
+                </button>
+                <button class="tab-btn" data-tab="file">
+                    <i class="fas fa-file"></i> File Encryption
+                </button>
+            </div>
+            
+            <!-- Text Encryption Tab -->
+            <div class="tab-content active" id="text-tab">
+                <div class="input-group">
+                    <label for="textInput"><i class="fas fa-pencil-alt"></i> Enter Text to Encrypt/Decrypt</label>
+                    <textarea id="textInput" placeholder="Enter your sensitive text here..."></textarea>
+                </div>
+                
+                <div class="input-group">
+                    <label for="encryptionKey"><i class="fas fa-key"></i> Encryption Key</label>
+                    <input type="password" id="encryptionKey" placeholder="Enter a strong password for encryption...">
+                    <div class="password-strength">
+                        <div class="password-strength-bar" id="passwordStrengthBar"></div>
+                    </div>
+                    <div class="password-strength-text" id="passwordStrengthText"></div>
+                </div>
+                
+                <div class="buttons">
+                    <button id="encryptBtn">
+                        <i class="fas fa-lock"></i> Encrypt Text
+                    </button>
+                    <button id="decryptBtn" class="secondary">
+                        <i class="fas fa-unlock"></i> Decrypt Text
+                    </button>
+                    <button id="clearTextBtn">
+                        <i class="fas fa-trash"></i> Clear
+                    </button>
+                </div>
+            </div>
+            
+            <!-- File Encryption Tab -->
+            <div class="tab-content" id="file-tab">
+                <div class="input-group">
+                    <label for="fileInput"><i class="fas fa-cloud-upload-alt"></i> Select File</label>
+                    <input type="file" id="fileInput" class="file-input">
+                    <label for="fileInput" class="file-input-label">
+                        <i class="fas fa-file-upload"></i>
+                        <div>Click to select a file or drag and drop</div>
+                        <small>Maximum file size: 100MB • All file types supported</small>
+                    </label>
+                    <div class="file-info" id="fileInfo">
+                        <strong>Selected file:</strong> <span id="fileName"></span>
+                        <br>
+                        <strong>Size:</strong> <span id="fileSize"></span>
+                    </div>
+                </div>
+                
+                <div class="input-group">
+                    <label for="fileKey"><i class="fas fa-key"></i> Encryption Key</label>
+                    <input type="password" id="fileKey" placeholder="Enter a strong password for file encryption...">
+                </div>
+                
+                <div class="buttons">
+                    <button id="encryptFileBtn">
+                        <i class="fas fa-lock"></i> Encrypt File
+                    </button>
+                    <button id="decryptFileBtn" class="secondary">
+                        <i class="fas fa-unlock"></i> Decrypt File
+                    </button>
+                </div>
+            </div>
+            
+            <div class="loading" id="loading">
+                <div class="spinner"></div>
+                <p>Processing your data securely...</p>
+            </div>
+            
+            <div class="result-container" id="resultContainer">
+                <div class="result-header">
+                    <div class="result-title" id="resultTitle">Encrypted Data</div>
+                    <button id="copyResultBtn" class="success">
+                        <i class="fas fa-copy"></i> Copy
+                    </button>
+                </div>
+                <div class="result-content" id="resultContent"></div>
+            </div>
+            
+            <div class="security-info">
+                <h3>Security Features</h3>
+                <ul>
+                    <li><i class="fas fa-check"></i> AES-256 military-grade encryption</li>
+                    <li><i class="fas fa-check"></i> All processing happens in your browser</li>
+                    <li><i class="fas fa-check"></i> No data is sent to any server</li>
+                    <li><i class="fas fa-check"></i> Secure password-based key derivation</li>
+                    <li><i class="fas fa-check"></i> Randomized initialization vectors</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="card">
+            <h2>How It Works</h2>
+            
+            <div class="features">
+                <div class="feature">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <div class="feature-text">
+                        <h3>AES-256 Encryption</h3>
+                        <p>Uses the Advanced Encryption Standard with 256-bit keys, the same encryption used by governments and security agencies worldwide.</p>
+                    </div>
+                </div>
+                
+                <div class="feature">
+                    <div class="feature-icon">
+                        <i class="fas fa-user-secret"></i>
+                    </div>
+                    <div class="feature-text">
+                        <h3>Client-Side Only</h3>
+                        <p>All encryption and decryption happens entirely in your browser. Your sensitive data never leaves your device.</p>
+                    </div>
+                </div>
+                
+                <div class="feature">
+                    <div class="feature-icon">
+                        <i class="fas fa-key"></i>
+                    </div>
+                    <div class="feature-text">
+                        <h3>Password-Based Keys</h3>
+                        <p>Uses PBKDF2 to derive strong encryption keys from your password, making brute-force attacks extremely difficult.</p>
+                    </div>
+                </div>
+                
+                <div class="feature">
+                    <div class="feature-icon">
+                        <i class="fas fa-random"></i>
+                    </div>
+                    <div class="feature-text">
+                        <h3>Randomized Security</h3>
+                        <p>Each encryption uses random initialization vectors, ensuring identical data produces different encrypted results.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Securedly</h3>
+                <p>Your complete security suite for password generation, IP lookup, username creation, and data encryption.</p>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Tools</h3>
+                <ul class="footer-links">
+                    <li><a href="password.html">Password Generator</a></li>
+                    <li><a href="ipinfo.html">IP Information</a></li>
+                    <li><a href="username.html">Username Generator</a></li>
+                    <li><a href="encryption.html">Data Encryption</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Company</h3>
+                <ul class="footer-links">
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="privacy.html">Privacy Policy</a></li>
+                    <li><a href="terms.html">Terms of Service</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Connect</h3>
+                <ul class="footer-links">
+                    <li><a href="#"><i class="fab fa-twitter"></i> Twitter</a></li>
+                    <li><a href="https://github.com/Atelloblue/Securedly"><i class="fab fa-github"></i> GitHub</a></li>
+                    <li><a href="#"><i class="fab fa-discord"></i> Discord</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>&copy; 2025 Securedly. All rights reserved.</p>
+        </div>
+    </div>
+</footer>
+
+    <script>
+        // Mobile menu toggle
+        document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
+            document.querySelector('.nav-links').classList.toggle('active');
+        });
+
+        // Tab functionality
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                // Remove active class from all tabs
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                
+                // Add active class to clicked tab
+                this.classList.add('active');
+                const tabId = this.getAttribute('data-tab') + '-tab';
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+
+        // File size validation function
+        function validateFileSize(file) {
+            const maxSize = 100 * 1024 * 1024; // 100MB in bytes
+            if (file.size > maxSize) {
+                alert('File size exceeds 100MB limit. Please select a smaller file.');
+                return false;
+            }
+            return true;
+        }
+
+        // File input handling
+        const fileInput = document.getElementById('fileInput');
+        const fileInfo = document.getElementById('fileInfo');
+        const fileName = document.getElementById('fileName');
+        const fileSize = document.getElementById('fileSize');
+
+        fileInput.addEventListener('change', function(e) {
+            if (this.files.length > 0) {
+                const file = this.files[0];
+                
+                // Check file size
+                if (!validateFileSize(file)) {
+                    this.value = ''; // Clear the file input
+                    fileInfo.classList.remove('visible');
+                    return;
+                }
+                
+                fileName.textContent = file.name;
+                fileSize.textContent = formatFileSize(file.size);
+                fileInfo.classList.add('visible');
+            } else {
+                fileInfo.classList.remove('visible');
+            }
+        });
+
+        // Drag and drop functionality
+        const fileInputLabel = document.querySelector('.file-input-label');
+        
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            fileInputLabel.addEventListener(eventName, preventDefaults, false);
+        });
+
+        function preventDefaults(e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+
+        ['dragenter', 'dragover'].forEach(eventName => {
+            fileInputLabel.addEventListener(eventName, highlight, false);
+        });
+
+        ['dragleave', 'drop'].forEach(eventName => {
+            fileInputLabel.addEventListener(eventName, unhighlight, false);
+        });
+
+        function highlight() {
+            fileInputLabel.style.borderColor = 'var(--primary)';
+            fileInputLabel.style.background = 'rgba(88, 166, 255, 0.1)';
+        }
+
+        function unhighlight() {
+            fileInputLabel.style.borderColor = 'var(--border)';
+            fileInputLabel.style.background = 'var(--background)';
+        }
+
+        fileInputLabel.addEventListener('drop', handleDrop, false);
+
+        function handleDrop(e) {
+            const dt = e.dataTransfer;
+            const files = dt.files;
+            
+            if (files.length > 0) {
+                const file = files[0];
+                
+                // Check file size
+                if (!validateFileSize(file)) {
+                    fileInput.files = new DataTransfer().files; // Clear files
+                    fileInfo.classList.remove('visible');
+                    return;
+                }
+                
+                fileInput.files = files;
+                fileName.textContent = file.name;
+                fileSize.textContent = formatFileSize(file.size);
+                fileInfo.classList.add('visible');
+            }
+        }
+
+        // Password strength indicator
+        document.getElementById('encryptionKey').addEventListener('input', function() {
+            updatePasswordStrength(this.value);
+        });
+
+        function updatePasswordStrength(password) {
+            const strengthBar = document.getElementById('passwordStrengthBar');
+            const strengthText = document.getElementById('passwordStrengthText');
+            
+            if (!password) {
+                strengthBar.style.width = '0%';
+                strengthBar.style.background = 'transparent';
+                strengthText.textContent = '';
+                return;
+            }
+            
+            // Calculate password strength
+            let strength = 0;
+            let feedback = '';
+            
+            // Length check
+            if (password.length >= 8) strength += 25;
+            if (password.length >= 12) strength += 10;
+            
+            // Character variety checks
+            if (/[a-z]/.test(password)) strength += 10;
+            if (/[A-Z]/.test(password)) strength += 10;
+            if (/[0-9]/.test(password)) strength += 10;
+            if (/[^a-zA-Z0-9]/.test(password)) strength += 15;
+            
+            // Entropy check (approximate)
+            const uniqueChars = new Set(password).size;
+            strength += Math.min(20, uniqueChars * 2);
+            
+            // Cap at 100
+            strength = Math.min(100, strength);
+            
+            // Update UI
+            strengthBar.style.width = strength + '%';
+            
+            if (strength < 40) {
+                strengthBar.style.background = 'var(--danger)';
+                feedback = 'Weak';
+            } else if (strength < 70) {
+                strengthBar.style.background = 'var(--warning)';
+                feedback = 'Moderate';
+            } else {
+                strengthBar.style.background = 'var(--success)';
+                feedback = 'Strong';
+            }
+            
+            strengthText.textContent = feedback;
+        }
+
+        // Encryption functions
+        async function deriveKey(password, salt) {
+            const encoder = new TextEncoder();
+            const keyMaterial = await crypto.subtle.importKey(
+                'raw',
+                encoder.encode(password),
+                'PBKDF2',
+                false,
+                ['deriveKey']
+            );
+            
+            return await crypto.subtle.deriveKey(
+                {
+                    name: 'PBKDF2',
+                    salt: salt,
+                    iterations: 100000,
+                    hash: 'SHA-256'
+                },
+                keyMaterial,
+                { name: 'AES-GCM', length: 256 },
+                false,
+                ['encrypt', 'decrypt']
+            );
+        }
+
+        async function encryptText(text, password) {
+            const encoder = new TextEncoder();
+            const salt = crypto.getRandomValues(new Uint8Array(16));
+            const iv = crypto.getRandomValues(new Uint8Array(12));
+            
+            const key = await deriveKey(password, salt);
+            const encrypted = await crypto.subtle.encrypt(
+                {
+                    name: 'AES-GCM',
+                    iv: iv
+                },
+                key,
+                encoder.encode(text)
+            );
+            
+            // Combine salt + iv + encrypted data
+            const combined = new Uint8Array(salt.length + iv.length + encrypted.byteLength);
+            combined.set(salt);
+            combined.set(iv, salt.length);
+            combined.set(new Uint8Array(encrypted), salt.length + iv.length);
+            
+            return btoa(String.fromCharCode(...combined));
+        }
+
+        async function decryptText(encryptedData, password) {
+            try {
+                const combined = new Uint8Array(atob(encryptedData).split('').map(c => c.charCodeAt(0)));
+                const salt = combined.slice(0, 16);
+                const iv = combined.slice(16, 28);
+                const encrypted = combined.slice(28);
+                
+                const key = await deriveKey(password, salt);
+                const decrypted = await crypto.subtle.decrypt(
+                    {
+                        name: 'AES-GCM',
+                        iv: iv
+                    },
+                    key,
+                    encrypted
+                );
+                
+                return new TextDecoder().decode(decrypted);
+            } catch (error) {
+                throw new Error('Decryption failed. Please check your password and encrypted data.');
+            }
+        }
+
+        // File encryption functions
+        async function encryptFile(file, password) {
+            const salt = crypto.getRandomValues(new Uint8Array(16));
+            const iv = crypto.getRandomValues(new Uint8Array(12));
+            
+            const key = await deriveKey(password, salt);
+            const fileBuffer = await file.arrayBuffer();
+            const encrypted = await crypto.subtle.encrypt(
+                {
+                    name: 'AES-GCM',
+                    iv: iv
+                },
+                key,
+                fileBuffer
+            );
+            
+            // Combine salt + iv + encrypted data
+            const combined = new Uint8Array(salt.length + iv.length + encrypted.byteLength);
+            combined.set(salt);
+            combined.set(iv, salt.length);
+            combined.set(new Uint8Array(encrypted), salt.length + iv.length);
+            
+            return new Blob([combined], { type: 'application/octet-stream' });
+        }
+
+        async function decryptFile(encryptedBlob, password) {
+            try {
+                const buffer = await encryptedBlob.arrayBuffer();
+                const combined = new Uint8Array(buffer);
+                const salt = combined.slice(0, 16);
+                const iv = combined.slice(16, 28);
+                const encrypted = combined.slice(28);
+                
+                const key = await deriveKey(password, salt);
+                const decrypted = await crypto.subtle.decrypt(
+                    {
+                        name: 'AES-GCM',
+                        iv: iv
+                    },
+                    key,
+                    encrypted
+                );
+                
+                return new Blob([decrypted]);
+            } catch (error) {
+                throw new Error('File decryption failed. Please check your password and encrypted file.');
+            }
+        }
+
+        // UI Event Handlers
+        document.getElementById('encryptBtn').addEventListener('click', async function() {
+            const text = document.getElementById('textInput').value.trim();
+            const password = document.getElementById('encryptionKey').value.trim();
+            
+            if (!text) {
+                alert('Please enter text to encrypt.');
+                return;
+            }
+            
+            if (!password) {
+                alert('Please enter an encryption password.');
+                return;
+            }
+            
+            showLoading();
+            
+            try {
+                const encrypted = await encryptText(text, password);
+                showResult('Encrypted Data', encrypted);
+            } catch (error) {
+                alert('Encryption failed: ' + error.message);
+            } finally {
+                hideLoading();
+            }
+        });
+
+        document.getElementById('decryptBtn').addEventListener('click', async function() {
+            const text = document.getElementById('textInput').value.trim();
+            const password = document.getElementById('encryptionKey').value.trim();
+            
+            if (!text) {
+                alert('Please enter encrypted text to decrypt.');
+                return;
+            }
+            
+            if (!password) {
+                alert('Please enter the decryption password.');
+                return;
+            }
+            
+            showLoading();
+            
+            try {
+                const decrypted = await decryptText(text, password);
+                showResult('Decrypted Data', decrypted);
+            } catch (error) {
+                alert('Decryption failed: ' + error.message);
+            } finally {
+                hideLoading();
+            }
+        });
+
+        document.getElementById('clearTextBtn').addEventListener('click', function() {
+            document.getElementById('textInput').value = '';
+            document.getElementById('encryptionKey').value = '';
+            hideResult();
+        });
+
+        document.getElementById('copyResultBtn').addEventListener('click', function() {
+            const resultContent = document.getElementById('resultContent').textContent;
+            navigator.clipboard.writeText(resultContent).then(() => {
+                const btn = document.getElementById('copyResultBtn');
+                const originalText = btn.innerHTML;
+                btn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                btn.classList.add('copied');
+                setTimeout(() => {
+                    btn.innerHTML = originalText;
+                    btn.classList.remove('copied');
+                }, 2000);
+            });
+        });
+
+        // File encryption handlers
+        document.getElementById('encryptFileBtn').addEventListener('click', async function() {
+            if (!fileInput.files.length) {
+                alert('Please select a file to encrypt.');
+                return;
+            }
+            
+            const file = fileInput.files[0];
+            
+            // Double-check file size (in case validation was bypassed)
+            if (!validateFileSize(file)) {
+                return;
+            }
+            
+            const password = document.getElementById('fileKey').value.trim();
+            if (!password) {
+                alert('Please enter an encryption password.');
+                return;
+            }
+            
+            showLoading();
+            
+            try {
+                const encryptedBlob = await encryptFile(file, password);
+                
+                // Create download link
+                const url = URL.createObjectURL(encryptedBlob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = file.name + '.encrypted';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            } catch (error) {
+                alert('File encryption failed: ' + error.message);
+            } finally {
+                hideLoading();
+            }
+        });
+
+        document.getElementById('decryptFileBtn').addEventListener('click', async function() {
+            if (!fileInput.files.length) {
+                alert('Please select a file to decrypt.');
+                return;
+            }
+            
+            const file = fileInput.files[0];
+            
+            // Double-check file size for decryption as well
+            if (!validateFileSize(file)) {
+                return;
+            }
+            
+            const password = document.getElementById('fileKey').value.trim();
+            if (!password) {
+                alert('Please enter the decryption password.');
+                return;
+            }
+            
+            showLoading();
+            
+            try {
+                const decryptedBlob = await decryptFile(file, password);
+                
+                // Create download link
+                const url = URL.createObjectURL(decryptedBlob);
+                const a = document.createElement('a');
+                
+                // Try to determine original filename
+                let filename = file.name;
+                if (filename.endsWith('.encrypted')) {
+                    filename = filename.slice(0, -10); // Remove .encrypted extension
+                } else {
+                    filename = 'decrypted_' + filename;
+                }
+                
+                a.href = url;
+                a.download = filename;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            } catch (error) {
+                alert('File decryption failed: ' + error.message);
+            } finally {
+                hideLoading();
+            }
+        });
+
+        // Helper functions
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+
+        function showLoading() {
+            document.getElementById('loading').classList.add('visible');
+        }
+
+        function hideLoading() {
+            document.getElementById('loading').classList.remove('visible');
+        }
+
+        function showResult(title, content) {
+            document.getElementById('resultTitle').textContent = title;
+            document.getElementById('resultContent').textContent = content;
+            document.getElementById('resultContainer').classList.add('visible');
+        }
+
+        function hideResult() {
+            document.getElementById('resultContainer').classList.remove('visible');
+        }
+
+        // Initialize
+        window.addEventListener('load', function() {
+            // Focus on text input
+            document.getElementById('textInput').focus();
+        });
+    </script>
+</body>
+</html>
