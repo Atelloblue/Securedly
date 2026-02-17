@@ -1,38 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet type="text/xsl" href="sitemap.xsl"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  
+
   <url>
     <loc>https://securedly.netlify.app/</loc>
-    <lastmod>2025-10-18</lastmod>
   </url>
   <url>
     <loc>https://securedly.netlify.app/about</loc>
-    <lastmod>2025-10-18</lastmod>
   </url>
   <url>
     <loc>https://securedly.netlify.app/privacy</loc>
-    <lastmod>2025-10-18</lastmod>
   </url>
   <url>
     <loc>https://securedly.netlify.app/terms</loc>
-    <lastmod>2025-10-18</lastmod>
   </url>
   <url>
     <loc>https://securedly.netlify.app/contact</loc>
-    <lastmod>2025-10-18</lastmod>
   </url>
   <url>
     <loc>https://securedly.netlify.app/tools/password</loc>
-    <lastmod>2025-10-18</lastmod>
   </url>
   <url>
     <loc>https://securedly.netlify.app/tools/ipinfo</loc>
-    <lastmod>2025-10-18</lastmod>
   </url>
   <url>
     <loc>https://securedly.netlify.app/tools/encryption</loc>
-    <lastmod>2025-10-18</lastmod>
   </url>
 
 </urlset>
