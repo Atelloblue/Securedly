@@ -16,20 +16,29 @@
             background-color: #ffffff;
             color: #000000;
             margin: 40px;
-            line-height: 1.6;
           }
 
           h1 {
             margin-bottom: 20px;
           }
 
-          ul {
-            list-style-type: none;
-            padding-left: 0;
+          table {
+            width: 100%;
+            border-collapse: collapse;
           }
 
-          li {
-            margin: 10px 0;
+          th, td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: left;
+          }
+
+          th {
+            background-color: #f4f4f4;
+          }
+
+          tr:nth-child(even) {
+            background-color: #fafafa;
           }
 
           a {
@@ -42,31 +51,56 @@
             text-decoration: underline;
           }
 
-          .priority {
-            color: #555;
+          .muted {
+            color: #888;
             font-size: 0.9em;
-            margin-left: 10px;
           }
         </style>
       </head>
       <body>
         <h1>Securedly Sitemap</h1>
-        <ul>
+
+        <table>
+          <tr>
+            <th>URL</th>
+            <th>Priority</th>
+            <th>Last Modified</th>
+          </tr>
+
           <xsl:for-each select="s:urlset/s:url">
-            <li>
-              <a href="{s:loc}">
-                <xsl:value-of select="s:loc"/>
-              </a>
+            <tr>
+              <td>
+                <a href="{s:loc}">
+                  <xsl:value-of select="s:loc"/>
+                </a>
+              </td>
 
-              <xsl:if test="s:priority">
-                <span class="priority">
-                  (Priority: <xsl:value-of select="s:priority"/>)
-                </span>
-              </xsl:if>
+              <td>
+                <xsl:choose>
+                  <xsl:when test="s:priority">
+                    <xsl:value-of select="s:priority"/>
+                  </xsl:when>
+                  <xsl:otherwise>
+                    <span class="muted">—</span>
+                  </xsl:otherwise>
+                </xsl:choose>
+              </td>
 
-            </li>
+              <td>
+                <xsl:choose>
+                  <xsl:when test="s:lastmod">
+                    <xsl:value-of select="s:lastmod"/>
+                  </xsl:when>
+                  <xsl:otherwise>
+                    <span class="muted">—</span>
+                  </xsl:otherwise>
+                </xsl:choose>
+              </td>
+
+            </tr>
           </xsl:for-each>
-        </ul>
+
+        </table>
       </body>
     </html>
   </xsl:template>
