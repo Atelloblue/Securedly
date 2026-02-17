@@ -44,7 +44,7 @@
         </style>
       </head>
       <body>
-        <h1>Securedly XML Sitemap</h1>
+        <h1>Securedly Sitemap</h1>
         <p>This sitemap contains the publicly accessible URLs for Securedly.</p>
         <ul>
           <xsl:for-each select="s:urlset/s:url">
