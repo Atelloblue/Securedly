@@ -9,41 +9,33 @@
     <html>
       <head>
         <title>Securedly Sitemap</title>
+        <meta name="robots" content="noindex, follow"/>
         <style>
           body {
             font-family: Arial, sans-serif;
             background-color: #ffffff;
             color: #000000;
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-          }
-
-          .container {
-            text-align: center;
-            max-width: 600px;
-            width: 100%;
+            margin: 40px;
+            line-height: 1.6;
           }
 
           h1 {
-            margin-bottom: 30px;
+            margin-bottom: 20px;
           }
 
           ul {
             list-style-type: none;
-            padding: 0;
+            padding-left: 0;
           }
 
           li {
-            margin: 10px 0;
+            margin: 8px 0;
           }
 
           a {
-            text-decoration: none;
             color: #6a0dad; /* purple */
-            font-weight: 500;
+            text-decoration: none;
+            word-break: break-all;
           }
 
           a:hover {
@@ -52,18 +44,17 @@
         </style>
       </head>
       <body>
-        <div class="container">
-          <h1>Securedly Sitemap</h1>
-          <ul>
-            <xsl:for-each select="s:urlset/s:url">
-              <li>
-                <a href="{s:loc}">
-                  <xsl:value-of select="s:loc"/>
-                </a>
-              </li>
-            </xsl:for-each>
-          </ul>
-        </div>
+        <h1>Securedly XML Sitemap</h1>
+        <p>This sitemap contains the publicly accessible URLs for Securedly.</p>
+        <ul>
+          <xsl:for-each select="s:urlset/s:url">
+            <li>
+              <a href="{s:loc}">
+                <xsl:value-of select="s:loc"/>
+              </a>
+            </li>
+          </xsl:for-each>
+        </ul>
       </body>
     </html>
   </xsl:template>
