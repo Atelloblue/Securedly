@@ -624,242 +624,159 @@
     </footer>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <script>
-        // Mobile menu toggle
-        document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
-            document.querySelector('.nav-links').classList.toggle('active');
-        });
+<script>
+    // Mobile menu toggle
+    document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
+        document.querySelector('.nav-links').classList.toggle('active');
+    });
 
-        // IP Information functionality
-        document.addEventListener('DOMContentLoaded', function() {
-            const loadingElement = document.getElementById('loading');
-            const ipInfoElement = document.getElementById('ip-info');
-            const errorElement = document.getElementById('error-message');
-            const ipInput = document.getElementById('ip-input');
-            const lookupBtn = document.getElementById('lookup-btn');
-            const myIpBtn = document.getElementById('my-ip-btn');
-            const apiStatusElement = document.getElementById('api-status');
-            const statusIcon = apiStatusElement.querySelector('.status-icon');
-            const statusText = apiStatusElement.querySelector('.status-text');
-            
-            let map = null;
-            let currentMarker = null;
-            
-            // Initialize map
-            function initMap() {
-                if (map) {
-                    map.remove();
-                }
-                map = L.map('ip-map').setView([0, 0], 2);
-                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-                    className: 'map-tiles'
-                }).addTo(map);
+    document.addEventListener('DOMContentLoaded', function() {
+        const loading = document.getElementById('loading');
+        const ipInfo = document.getElementById('ip-info');
+        const error = document.getElementById('error-message');
+        const ipInput = document.getElementById('ip-input');
+        const lookupBtn = document.getElementById('lookup-btn');
+        const myIpBtn = document.getElementById('my-ip-btn');
+        const apiStatus = document.getElementById('api-status');
+        const statusIcon = apiStatus.querySelector('.status-icon');
+        const statusText = apiStatus.querySelector('.status-text');
+
+        let map = null;
+        let currentMarker = null;
+
+        // Initialize map
+        function initMap() {
+            if (map) map.remove();
+            map = L.map('ip-map').setView([0, 0], 2);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(map);
+        }
+
+        initMap();
+
+        function updateApiStatus(status, message) {
+            if (status === 'success') {
+                statusIcon.className = 'fas fa-circle success';
+                statusText.textContent = message;
+                statusText.className = 'status-text success';
+            } else if (status === 'error') {
+                statusIcon.className = 'fas fa-circle error';
+                statusText.textContent = message;
+                statusText.className = 'status-text error';
+            } else {
+                statusIcon.className = 'fas fa-circle';
+                statusText.textContent = message;
+                statusText.className = 'status-text';
             }
-            
-            initMap();
-            
-            // Update API status display
-            function updateApiStatus(status, message) {
-                if (status === 'success') {
-                    statusIcon.className = 'fas fa-circle success';
-                    statusText.textContent = message;
-                    statusText.className = 'status-text success';
-                } else if (status === 'error') {
-                    statusIcon.className = 'fas fa-circle error';
-                    statusText.textContent = message;
-                    statusText.className = 'status-text error';
-                } else {
-                    statusIcon.className = 'fas fa-circle';
-                    statusText.textContent = message;
-                    statusText.className = 'status-text';
+        }
+
+        async function fetchIPInfo(ip = '') {
+            loading.style.display = 'flex';
+            ipInfo.style.display = 'none';
+            error.style.display = 'none';
+
+            const apiEndpoints = [
+                {
+                    name: 'ipapi.co',
+                    url: ip ? `https://ipapi.co/${ip}/json/` : 'https://ipapi.co/json/',
+                    parser: data => ({
+                        ip: data.ip,
+                        country: data.country_name || 'Unknown',
+                        region: data.region || 'Unknown',
+                        city: data.city || 'Unknown',
+                        isp: data.org || 'Unknown',
+                        timezone: data.timezone || 'Unknown',
+                        lat: data.latitude,
+                        lon: data.longitude
+                    })
+                },
+                {
+                    name: 'ip-api.com',
+                    url: `http://ip-api.com/json/${ip || ''}?fields=status,message,country,regionName,city,lat,lon,timezone,isp,query`,
+                    parser: data => ({
+                        ip: data.query,
+                        country: data.country || 'Unknown',
+                        region: data.regionName || 'Unknown',
+                        city: data.city || 'Unknown',
+                        isp: data.isp || 'Unknown',
+                        timezone: data.timezone || 'Unknown',
+                        lat: data.lat,
+                        lon: data.lon
+                    })
+                },
+                {
+                    name: 'ipwhois',
+                    url: ip ? `https://ipwhois.app/json/${ip}` : 'https://ipwhois.app/json/',
+                    parser: data => ({
+                        ip: data.ip,
+                        country: data.country || 'Unknown',
+                        region: data.region || 'Unknown',
+                        city: data.city || 'Unknown',
+                        isp: data.isp || 'Unknown',
+                        timezone: data.timezone || 'Unknown',
+                        lat: data.latitude,
+                        lon: data.longitude
+                    })
                 }
-            }
-            
-            // Fetch IP information with multiple API fallbacks
-            async function fetchIPInfo(ip = '') {
-                // Show loading, hide other states
-                loadingElement.style.display = 'flex';
-                ipInfoElement.style.display = 'none';
-                errorElement.style.display = 'none';
-                
-                // Define multiple API endpoints
-                const apiEndpoints = [
-                    {
-                        name: 'ipapi.co',
-                        url: ip ? `https://ipapi.co/${ip}/json/` : 'https://ipapi.co/json/',
-                        parser: (data) => ({
-                            ip: data.ip,
-                            city: data.city,
-                            region: data.region,
-                            country: data.country_name,
-                            countryCode: data.country_code,
-                            isp: data.org,
-                            timezone: data.timezone,
-                            latitude: data.latitude,
-                            longitude: data.longitude
-                        })
-                    },
-                    {
-                        name: 'ip-api.com',
-                        url: `http://ip-api.com/json/${ip || ''}?fields=status,message,country,countryCode,region,regionName,city,zip,lat,lon,timezone,isp,org,as,query`,
-                        parser: (data) => ({
-                            ip: data.query,
-                            city: data.city,
-                            region: data.regionName,
-                            country: data.country,
-                            countryCode: data.countryCode,
-                            isp: data.isp,
-                            timezone: data.timezone,
-                            latitude: data.lat,
-                            longitude: data.lon
-                        })
-                    },
-                    {
-                        name: 'ipwhois',
-                        url: ip ? `https://ipwhois.app/json/${ip}` : 'https://ipwhois.app/json/',
-                        parser: (data) => ({
-                            ip: data.ip,
-                            city: data.city,
-                            region: data.region,
-                            country: data.country,
-                            countryCode: data.country_code,
-                            isp: data.isp,
-                            timezone: data.timezone,
-                            latitude: data.latitude,
-                            longitude: data.longitude
-                        })
-                    },
-                    {
-                        name: 'ipapi (alternative)',
-                        url: ip ? `https://api.ipapi.com/${ip}?access_key=demo` : 'https://api.ipapi.com/api/check?access_key=demo',
-                        parser: (data) => ({
-                            ip: data.ip,
-                            city: data.city,
-                            region: data.region_name,
-                            country: data.country_name,
-                            countryCode: data.country_code,
-                            isp: data.connection ? data.connection.isp : 'Unknown',
-                            timezone: data.time_zone ? data.time_zone.id : 'Unknown',
-                            latitude: data.latitude,
-                            longitude: data.longitude
-                        })
+            ];
+
+            for (let api of apiEndpoints) {
+                updateApiStatus('', `Trying ${api.name}...`);
+                try {
+                    const res = await fetch(api.url, { headers: { 'Accept': 'application/json' }, mode: 'cors' });
+                    if (!res.ok) continue;
+                    const data = await res.json();
+                    if (data.error || (data.status && data.status === 'fail')) continue;
+
+                    const parsed = api.parser(data);
+
+                    // Update UI: City, State, Country
+                    const locationText = `${parsed.city}, ${parsed.region}, ${parsed.country}`;
+                    document.getElementById('ip-address').textContent = parsed.ip || '-';
+                    document.getElementById('location').textContent = locationText;
+                    document.getElementById('isp').textContent = parsed.isp || '-';
+                    document.getElementById('timezone').textContent = parsed.timezone || '-';
+
+                    // Map
+                    if (parsed.lat && parsed.lon) {
+                        map.setView([parsed.lat, parsed.lon], 10);
+                        if (currentMarker) map.removeLayer(currentMarker);
+                        currentMarker = L.marker([parsed.lat, parsed.lon])
+                            .addTo(map)
+                            .bindPopup(`Approximate location: ${locationText}`)
+                            .openPopup();
+                    } else {
+                        map.setView([0, 0], 2);
+                        if (currentMarker) map.removeLayer(currentMarker);
+                        currentMarker = null;
                     }
-                ];
-                
-                // Try each API endpoint until one works
-                for (let i = 0; i < apiEndpoints.length; i++) {
-                    const api = apiEndpoints[i];
-                    updateApiStatus('', `Trying ${api.name}...`);
-                    
-                    try {
-                        const response = await fetch(api.url, {
-                            method: 'GET',
-                            headers: {
-                                'Accept': 'application/json',
-                            },
-                            mode: 'cors'
-                        });
-                        
-                        if (!response.ok) {
-                            console.warn(`API ${api.name} failed with status: ${response.status}`);
-                            continue;
-                        }
-                        
-                        const data = await response.json();
-                        
-                        // Check if the API returned an error
-                        if (data.error || (data.status && data.status === 'fail')) {
-                            console.warn(`API ${api.name} returned error:`, data.message || data.reason);
-                            continue;
-                        }
-                        
-                        // Parse the data using the API-specific parser
-                        const parsedData = api.parser(data);
-                        
-                        // Validate that we have at least an IP address
-                        if (!parsedData.ip) {
-                            console.warn(`API ${api.name} returned invalid data`);
-                            continue;
-                        }
-                        
-                        // Update UI with IP information
-                        document.getElementById('ip-address').textContent = parsedData.ip;
-                        document.getElementById('location').textContent = `${parsedData.city || 'Unknown'}, ${parsedData.region || 'Unknown'}, ${parsedData.country || 'Unknown'}`;
-                        document.getElementById('isp').textContent = parsedData.isp || 'Unknown';
-                        document.getElementById('country').textContent = `${parsedData.country || 'Unknown'} (${parsedData.countryCode || 'N/A'})`;
-                        document.getElementById('city').textContent = `${parsedData.city || 'Unknown'}, ${parsedData.region || 'Unknown'}`;
-                        document.getElementById('timezone').textContent = parsedData.timezone || 'Unknown';
-                        
-                        // Update map with location
-                        if (parsedData.latitude && parsedData.longitude) {
-                            map.setView([parsedData.latitude, parsedData.longitude], 10);
-                            
-                            // Remove existing marker
-                            if (currentMarker) {
-                                map.removeLayer(currentMarker);
-                            }
-                            
-                            // Add new marker
-                            currentMarker = L.marker([parsedData.latitude, parsedData.longitude])
-                                .addTo(map)
-                                .bindPopup(`Approximate location: ${parsedData.city || 'Unknown'}, ${parsedData.country || 'Unknown'}`)
-                                .openPopup();
-                        } else {
-                            // Reset to world view if no coordinates
-                            map.setView([0, 0], 2);
-                            if (currentMarker) {
-                                map.removeLayer(currentMarker);
-                                currentMarker = null;
-                            }
-                        }
-                        
-                        // Update input field with the IP that was searched
-                        ipInput.value = parsedData.ip;
-                        
-                        // Hide loading, show info
-                        loadingElement.style.display = 'none';
-                        ipInfoElement.style.display = 'block';
-                        
-                        // Update API status
-                        updateApiStatus('success', `Data from ${api.name}`);
-                        
-                        return; // Success, exit the function
-                        
-                    } catch (error) {
-                        console.warn(`API ${api.name} failed:`, error.message);
-                        // Continue to next API
-                    }
+
+                    ipInput.value = parsed.ip;
+
+                    loading.style.display = 'none';
+                    ipInfo.style.display = 'block';
+                    updateApiStatus('success', `Data from ${api.name}`);
+                    return;
+                } catch (err) {
+                    console.warn(`API ${api.name} failed:`, err.message);
                 }
-                
-                // If we get here, all APIs failed
-                loadingElement.style.display = 'none';
-                errorElement.style.display = 'block';
-                updateApiStatus('error', 'All APIs failed');
-                document.getElementById('error-text').textContent = 'Unable to retrieve IP information from any available service. Please check your connection and try again.';
             }
-            
-            // Event listeners
-            lookupBtn.addEventListener('click', function() {
-                const ip = ipInput.value.trim();
-                fetchIPInfo(ip);
-            });
-            
-            myIpBtn.addEventListener('click', function() {
-                ipInput.value = '';
-                fetchIPInfo();
-            });
-            
-            // Allow Enter key to trigger lookup
-            ipInput.addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') {
-                    lookupBtn.click();
-                }
-            });
-            
-            // Load user's IP by default
-            fetchIPInfo();
-        });
-    </script>
+
+            // All APIs failed
+            loading.style.display = 'none';
+            error.style.display = 'block';
+            updateApiStatus('error', 'All APIs failed');
+            document.getElementById('error-text').textContent = 'Unable to retrieve IP information. Please check your connection.';
+        }
+
+        lookupBtn.addEventListener('click', () => fetchIPInfo(ipInput.value.trim()));
+        myIpBtn.addEventListener('click', () => { ipInput.value = ''; fetchIPInfo(); });
+        ipInput.addEventListener('keypress', e => { if (e.key === 'Enter') lookupBtn.click(); });
+
+        // Load user's IP by default
+        fetchIPInfo();
+    });
+</script>
 </body>
 </html>
