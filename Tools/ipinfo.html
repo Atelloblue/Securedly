@@ -678,6 +678,34 @@
 
             const apiEndpoints = [
                 {
+                    name: 'ipwho.is',
+                    url: ip ? `https://ipwho.is/${ip}` : `https://ipwho.is/`,
+                    parser: data => ({
+                        ip: data.ip,
+                        country: data.country || 'Unknown',
+                        region: data.region || 'Unknown',
+                        city: data.city || 'Unknown',
+                        isp: data.connection?.isp || 'Unknown',
+                        timezone: data.timezone?.id || 'Unknown',
+                        lat: data.latitude,
+                        lon: data.longitude
+                    })
+                },
+                {
+                    name: 'ipwho.org',
+                    url: ip ? `https://ipwhois.app/json/${ip}` : `https://ipwhois.app/json/`,
+                    parser: data => ({
+                        ip: data.ip,
+                        country: data.country || 'Unknown',
+                        region: data.region || 'Unknown',
+                        city: data.city || 'Unknown',
+                        isp: data.isp || 'Unknown',
+                        timezone: data.timezone || 'Unknown',
+                        lat: data.latitude,
+                        lon: data.longitude
+                    })
+                },
+                {
                     name: 'ipapi.co',
                     url: ip ? `https://ipapi.co/${ip}/json/` : 'https://ipapi.co/json/',
                     parser: data => ({
@@ -686,34 +714,6 @@
                         region: data.region || 'Unknown',
                         city: data.city || 'Unknown',
                         isp: data.org || 'Unknown',
-                        timezone: data.timezone || 'Unknown',
-                        lat: data.latitude,
-                        lon: data.longitude
-                    })
-                },
-                {
-                    name: 'ip-api.com',
-                    url: `http://ip-api.com/json/${ip || ''}?fields=status,message,country,regionName,city,lat,lon,timezone,isp,query`,
-                    parser: data => ({
-                        ip: data.query,
-                        country: data.country || 'Unknown',
-                        region: data.regionName || 'Unknown',
-                        city: data.city || 'Unknown',
-                        isp: data.isp || 'Unknown',
-                        timezone: data.timezone || 'Unknown',
-                        lat: data.lat,
-                        lon: data.lon
-                    })
-                },
-                {
-                    name: 'ipwhois',
-                    url: ip ? `https://ipwhois.app/json/${ip}` : 'https://ipwhois.app/json/',
-                    parser: data => ({
-                        ip: data.ip,
-                        country: data.country || 'Unknown',
-                        region: data.region || 'Unknown',
-                        city: data.city || 'Unknown',
-                        isp: data.isp || 'Unknown',
                         timezone: data.timezone || 'Unknown',
                         lat: data.latitude,
                         lon: data.longitude
@@ -727,7 +727,7 @@
                     const res = await fetch(api.url, { headers: { 'Accept': 'application/json' }, mode: 'cors' });
                     if (!res.ok) continue;
                     const data = await res.json();
-                    if (data.error || (data.status && data.status === 'fail')) continue;
+                    if (data.success === false || data.error || (data.status && data.status === 'fail')) continue;
 
                     const parsed = api.parser(data);
 
