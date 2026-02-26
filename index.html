@@ -41,13 +41,13 @@
             padding: 0 20px;
         }
         
-        /* Header & Navigation */
+        /* FIX: Changed fixed to sticky so the banner pushes the nav down */
         header {
             background: var(--card-bg);
             border-bottom: 1px solid var(--border);
-            position: fixed;
-            width: 100%;
+            position: sticky;
             top: 0;
+            width: 100%;
             z-index: 1000;
         }
         
@@ -96,9 +96,9 @@
             color: var(--primary);
         }
         
-        /* Hero Section */
+        /* Hero Section - Reduced top padding since header is now sticky */
         .hero {
-            padding: 140px 0 80px;
+            padding: 80px 0 80px;
             text-align: center;
             background: linear-gradient(135deg, var(--background) 0%, #0a0d12 100%);
         }
@@ -484,8 +484,9 @@
     </style>
 </head>
 <body>
-    <!-- Header -->
     <header>
+        <script src="https://keepandroidopen.org/banner.js"></script>
+        
         <div class="container">
             <nav>
                 <a href="index.html" class="logo">
@@ -507,7 +508,6 @@
         </div>
     </header>
 
-    <!-- Hero Section -->
     <section class="hero">
         <div class="container">
             <h1>Securedly is here!</h1>
@@ -526,7 +526,6 @@
         </div>
     </section>
 
-    <!-- Services Section -->
     <section id="services" class="section">
         <div class="container">
             <div class="section-title">
@@ -535,7 +534,6 @@
             </div>
             
             <div class="services-grid">
-                <!-- Password Generator Card -->
                 <div class="service-card">
                     <div class="service-icon icon-password">
                         <i class="fas fa-key"></i>
@@ -556,7 +554,6 @@
                     </a>
                 </div>
                 
-                <!-- IP Information Card -->
                 <div class="service-card">
                     <div class="service-icon icon-ipinfo">
                         <i class="fas fa-network-wired"></i>
@@ -577,7 +574,6 @@
                     </a>
                 </div>
                 
-                <!-- Data Encryption Card -->
                 <div class="service-card">
                     <div class="service-icon icon-encryption">
                         <i class="fas fa-lock"></i>
@@ -601,8 +597,7 @@
         </div>
     </section>
 
-    <!-- Stats Section -->
-<section class="stats">
+    <section class="stats">
     <div class="container">
         <div class="stats-grid">
             <div class="stat-item">
@@ -621,7 +616,6 @@
     </div>
 </section>
 
-    <!-- How It Works -->
     <section id="how-it-works" class="section">
         <div class="container">
             <div class="section-title">
@@ -665,7 +659,6 @@
         </div>
     </section>
 
-    <!-- CTA Section -->
     <section class="cta-section">
         <div class="container">
             <h2>Ready to Secure Your Digital Life?</h2>
@@ -681,7 +674,6 @@
         </div>
     </section>
 
-    <!-- Footer -->
     <footer>
         <div class="container">
             <div class="footer-content">
@@ -735,7 +727,10 @@
             const statItems = document.querySelectorAll('.stat-item h3');
             
             statItems.forEach(stat => {
-                const target = parseInt(stat.textContent);
+                const targetText = stat.textContent.replace(/[^\d]/g, '');
+                const target = parseInt(targetText);
+                if (isNaN(target)) return;
+                
                 let current = 0;
                 const increment = target / 50;
                 const timer = setInterval(() => {
