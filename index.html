@@ -3,746 +3,512 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Securedly - Homepage</title>
+    <title>Securedly - Home</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <meta name="google-site-verification" content="F7oM_55HWg3fwRvr0TeXuEwVFRgUWwyvJVYJWE4-M68" />
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
     <style>
+        :root {
+            --primary: #58a6ff;
+            --primary-glow: rgba(88, 166, 255, 0.4);
+            --accent: #79c0ff;
+            --background: #06090f;
+            --card-bg: rgba(22, 27, 34, 0.7);
+            --border: rgba(48, 54, 61, 0.8);
+            --text: #c9d1d9;
+            --text-white: #ffffff;
+            --glass: rgba(255, 255, 255, 0.03);
+            --success: #3fb950;
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
-        :root {
-            --primary: #58a6ff;
-            --primary-dark: #1f6feb;
-            --success: #3fb950;
-            --warning: #d29922;
-            --danger: #da3633;
-            --background: #0d1117;
-            --card-bg: #161b22;
-            --border: #30363d;
-            --text: #c9d1d9;
-            --text-light: #8b949e;
-            --text-white: #f0f6fc;
-        }
-        
+
+        html { scroll-behavior: smooth; }
+
         body {
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Plus Jakarta Sans', sans-serif;
             background: var(--background);
             color: var(--text);
+            overflow-x: hidden;
             line-height: 1.6;
         }
-        
+
+        .bg-glow {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: 
+                radial-gradient(circle at 10% 20%, rgba(88, 166, 255, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(31, 111, 235, 0.05) 0%, transparent 40%);
+        }
+
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 20px;
+            padding: 0 24px;
         }
-        
-        /* FIX: Changed fixed to sticky so the banner pushes the nav down */
+
+        /* --- Header --- */
         header {
-            background: var(--card-bg);
+            background: rgba(13, 17, 23, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             border-bottom: 1px solid var(--border);
             position: sticky;
             top: 0;
-            width: 100%;
             z-index: 1000;
         }
-        
+
         nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 1rem 0;
+            padding: 1.2rem 0;
         }
-        
+
         .logo {
             display: flex;
             align-items: center;
             gap: 12px;
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             font-weight: 700;
-            color: var(--primary);
+            color: var(--text-white);
             text-decoration: none;
         }
-        
+
         .logo i {
-            font-size: 1.8rem;
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: var(--primary);
+            filter: drop-shadow(0 0 8px var(--primary-glow));
         }
-        
+
         .nav-links {
             display: flex;
-            gap: 2rem;
+            gap: 2.5rem;
             list-style: none;
         }
-        
+
         .nav-links a {
             color: var(--text);
             text-decoration: none;
+            font-size: 0.95rem;
             font-weight: 500;
-            transition: color 0.3s ease;
+            transition: 0.3s;
         }
-        
-        .nav-links a:hover {
-            color: var(--primary);
-        }
-        
-        .nav-links a.active {
-            color: var(--primary);
-        }
-        
-        /* Hero Section - Reduced top padding since header is now sticky */
+
+        .nav-links a:hover, .nav-links a.active { color: var(--primary); }
+
+        /* --- Hero --- */
         .hero {
-            padding: 80px 0 80px;
+            padding: 100px 0 80px;
             text-align: center;
-            background: linear-gradient(135deg, var(--background) 0%, #0a0d12 100%);
         }
-        
+
+        .hero-badge {
+            background: rgba(88, 166, 255, 0.1);
+            color: var(--primary);
+            padding: 8px 16px;
+            border-radius: 100px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            display: inline-block;
+            border: 1px solid rgba(88, 166, 255, 0.2);
+        }
+
         .hero h1 {
-            font-size: 3.5rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            background: linear-gradient(135deg, var(--text-white), var(--primary));
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            letter-spacing: -1.5px;
+            background: linear-gradient(to bottom, #fff 30%, #8b949e 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            line-height: 1.2;
         }
-        
+
         .hero p {
             font-size: 1.2rem;
-            color: var(--text-light);
+            color: #8b949e;
             max-width: 700px;
-            margin: 0 auto 2rem;
+            margin: 0 auto 2.5rem;
         }
-        
-        .hero-buttons {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            margin-top: 2rem;
-            flex-wrap: wrap;
-        }
-        
-        .btn-primary {
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            color: white;
-            padding: 1rem 2rem;
-            border-radius: 10px;
+
+        /* --- Buttons --- */
+        .btn {
+            padding: 14px 28px;
+            border-radius: 12px;
             text-decoration: none;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .btn-secondary {
-            background: transparent;
-            color: var(--text);
-            padding: 1rem 2rem;
-            border-radius: 10px;
-            text-decoration: none;
-            font-weight: 500;
-            border: 2px solid var(--border);
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .btn-warning {
-            background: linear-gradient(135deg, var(--warning), #e3b341);
-            color: white;
-            padding: 1rem 2rem;
-            border-radius: 10px;
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .btn-info {
-            background: linear-gradient(135deg, #58a6ff, #1f6feb);
-            color: white;
-            padding: 1rem 2rem;
-            border-radius: 10px;
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .btn-primary:hover, .btn-secondary:hover, .btn-warning:hover, .btn-info:hover {
-            transform: translateY(-2px);
-        }
-        
-        .btn-primary:hover {
-            box-shadow: 0 5px 15px rgba(88, 166, 255, 0.3);
-        }
-        
-        .btn-secondary:hover {
-            border-color: var(--primary);
-            color: var(--primary);
-        }
-        
-        .btn-warning:hover {
-            box-shadow: 0 5px 15px rgba(210, 153, 34, 0.3);
-        }
-        
-        .btn-info:hover {
-            box-shadow: 0 5px 15px rgba(88, 166, 255, 0.3);
-        }
-        
-        /* Services Section */
-        .section {
-            padding: 80px 0;
-        }
-        
-        .section-title {
-            text-align: center;
-            margin-bottom: 3rem;
-        }
-        
-        .section-title h2 {
-            font-size: 2.5rem;
             font-weight: 600;
+            transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: #0d1117;
+            box-shadow: 0 4px 20px var(--primary-glow);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            background: var(--accent);
+        }
+
+        .btn-glass {
+            background: var(--glass);
             color: var(--text-white);
-            margin-bottom: 1rem;
+            border: 1px solid var(--border);
+            backdrop-filter: blur(10px);
         }
-        
-        .section-title p {
-            color: var(--text-light);
-            max-width: 600px;
-            margin: 0 auto;
-        }
-        
+
+        .btn-glass:hover { border-color: var(--primary); background: rgba(255, 255, 255, 0.08); }
+
+        /* --- Services Grid --- */
+        .section-header { text-align: center; margin-bottom: 4rem; }
+        .section-header h2 { font-size: 2.5rem; color: #fff; margin-bottom: 1rem; }
+
         .services-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
             gap: 2rem;
+            margin-bottom: 80px;
         }
-        
+
         .service-card {
             background: var(--card-bg);
-            border-radius: 16px;
-            padding: 2.5rem;
             border: 1px solid var(--border);
-            transition: all 0.3s ease;
-            text-align: center;
+            border-radius: 24px;
+            padding: 2.5rem;
+            transition: 0.4s;
+            display: flex;
+            flex-direction: column;
         }
-        
+
         .service-card:hover {
-            transform: translateY(-5px);
             border-color: var(--primary);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transform: translateY(-10px);
+            background: rgba(22, 27, 34, 0.95);
         }
-        
+
         .service-icon {
-            width: 80px;
-            height: 80px;
-            border-radius: 20px;
+            width: 60px;
+            height: 60px;
+            background: rgba(88, 166, 255, 0.1);
+            border-radius: 16px;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto 1.5rem;
-            font-size: 2.2rem;
-        }
-        
-        .icon-password {
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-        }
-        
-        .icon-ipinfo {
-            background: linear-gradient(135deg, var(--warning), #e3b341);
-        }
-        
-        .icon-username {
-            background: linear-gradient(135deg, var(--success), #56d364);
-        }
-        
-        .icon-encryption {
-            background: linear-gradient(135deg, #58a6ff, #1f6feb);
-        }
-        
-        .service-card h3 {
             font-size: 1.5rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-            color: var(--text-white);
-        }
-        
-        .service-card p {
-            color: var(--text-light);
+            color: var(--primary);
             margin-bottom: 1.5rem;
         }
-        
+
         .service-features {
             list-style: none;
-            text-align: left;
-            margin-bottom: 2rem;
+            margin: 1.5rem 0;
+            flex-grow: 1;
         }
-        
+
         .service-features li {
+            font-size: 0.9rem;
             margin-bottom: 0.8rem;
             display: flex;
             align-items: center;
             gap: 10px;
+            color: #8b949e;
         }
-        
-        .service-features i {
-            color: var(--success);
-        }
-        
-        /* Stats Section */
-        .stats {
-            background: var(--card-bg);
-            padding: 60px 0;
-            border-top: 1px solid var(--border);
-            border-bottom: 1px solid var(--border);
-        }
-        
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
+
+        .service-features i { color: var(--success); font-size: 0.8rem; }
+
+        /* --- Stats Bar --- */
+        .stats-bar {
+            margin: 80px 0;
+            padding: 50px;
+            background: var(--glass);
+            border: 1px solid var(--border);
+            border-radius: 32px;
+            display: flex;
+            justify-content: space-around;
             text-align: center;
+            flex-wrap: wrap;
+            gap: 30px;
         }
-        
-        .stat-item h3 {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: var(--primary);
-            margin-bottom: 0.5rem;
-        }
-        
-        .stat-item p {
-            color: var(--text-light);
-            font-weight: 500;
-        }
-        
-        /* How It Works */
-        .steps {
-            display: flex;
-            flex-direction: column;
-            gap: 2rem;
-            max-width: 800px;
+
+        .stat-item h3 { font-size: 2.8rem; color: #fff; margin-bottom: 5px; }
+        .stat-item p { color: var(--primary); font-weight: 600; text-transform: uppercase; letter-spacing: 1px; font-size: 0.8rem; }
+
+        /* --- Steps / How it Works --- */
+        .steps-container {
+            max-width: 900px;
             margin: 0 auto;
+            display: grid;
+            gap: 1.5rem;
         }
-        
-        .step {
+
+        .step-card {
+            background: var(--glass);
+            border: 1px solid var(--border);
+            padding: 2rem;
+            border-radius: 20px;
             display: flex;
-            gap: 2rem;
+            gap: 20px;
             align-items: flex-start;
         }
-        
-        .step-number {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+
+        .step-num {
+            background: var(--primary);
+            color: #0d1117;
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: 600;
-            font-size: 1.2rem;
+            font-weight: 800;
             flex-shrink: 0;
         }
-        
-        .step-content h3 {
-            font-size: 1.3rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            color: var(--text-white);
-        }
-        
-        /* CTA Section */
-        .cta-section {
-            background: linear-gradient(135deg, var(--card-bg) 0%, #1c2128 100%);
-            text-align: center;
-            padding: 80px 0;
-            border-radius: 20px;
-            margin: 40px 0;
-        }
-        
-        .cta-section h2 {
-            font-size: 2.5rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-            color: var(--text-white);
-        }
-        
-        .cta-section p {
-            color: var(--text-light);
-            max-width: 600px;
-            margin: 0 auto 2rem;
-        }
-        
-        /* Footer */
+
+        /* --- Footer --- */
         footer {
-            background: var(--card-bg);
+            padding: 80px 0 40px;
             border-top: 1px solid var(--border);
-            padding: 60px 0 30px;
+            margin-top: 100px;
+            background: rgba(13, 17, 23, 0.5);
         }
-        
-        .footer-content {
+
+        .footer-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-bottom: 2rem;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 4rem;
+            margin-bottom: 50px;
         }
-        
-        .footer-column h3 {
-            color: var(--text-white);
-            margin-bottom: 1.5rem;
-            font-size: 1.2rem;
+
+        .footer-col h4 { color: #fff; margin-bottom: 1.5rem; }
+        .footer-col ul { list-style: none; }
+        .footer-col ul li { margin-bottom: 10px; }
+        .footer-col ul a { color: #8b949e; text-decoration: none; transition: 0.3s; }
+        .footer-col ul a:hover { color: var(--primary); }
+
+        @media (max-width: 992px) {
+            .footer-grid { grid-template-columns: 1fr 1fr; }
         }
-        
-        .footer-links {
-            list-style: none;
-        }
-        
-        .footer-links li {
-            margin-bottom: 0.8rem;
-        }
-        
-        .footer-links a {
-            color: var(--text-light);
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-        
-        .footer-links a:hover {
-            color: var(--primary);
-        }
-        
-        .copyright {
-            text-align: center;
-            padding-top: 2rem;
-            border-top: 1px solid var(--border);
-            color: var(--text-light);
-            font-size: 0.9rem;
-        }
-        
-        /* Mobile Navigation */
-        .mobile-menu-btn {
-            display: none;
-            background: none;
-            border: none;
-            color: var(--text);
-            font-size: 1.5rem;
-            cursor: pointer;
-        }
-        
+
         @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                width: 100%;
-                background: var(--card-bg);
-                flex-direction: column;
-                padding: 1rem;
-                border-top: 1px solid var(--border);
-            }
-            
-            .nav-links.active {
-                display: flex;
-            }
-            
-            .mobile-menu-btn {
-                display: block;
-            }
-            
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-            
-            .hero-buttons {
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            .step {
-                flex-direction: column;
-                text-align: center;
-            }
-            
-            .services-grid {
-                grid-template-columns: 1fr;
-            }
+            .nav-links { display: none; }
+            .hero h1 { font-size: 2.8rem; }
+            .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
         }
     </style>
 </head>
 <body>
+    <div class="bg-glow"></div>
+
     <header>
-        <script src="https://keepandroidopen.org/banner.js"></script>
-        
         <div class="container">
             <nav>
                 <a href="index.html" class="logo">
-                    <i class="fas fa-shield-alt"></i>
+                    <i class="fas fa-shield-halved"></i>
                     <span>Securedly</span>
                 </a>
-                
                 <ul class="nav-links">
                     <li><a href="index.html" class="active">Home</a></li>
                     <li><a href="tools/password.html">Password Generator</a></li>
                     <li><a href="tools/ipinfo.html">IP Information</a></li>
                     <li><a href="tools/encryption.html">Data Encryption</a></li>
                 </ul>
-                
-                <button class="mobile-menu-btn">
-                    <i class="fas fa-bars"></i>
-                </button>
+                <a href="https://github.com/Atelloblue/Securedly" class="btn btn-glass" style="padding: 10px 20px; font-size: 0.85rem;">
+                    <i class="fab fa-github"></i> GitHub
+                </a>
             </nav>
         </div>
     </header>
 
-    <section class="hero">
-        <div class="container">
-            <h1>Securedly is here!</h1>
+    <main class="container">
+        <section class="hero" data-aos="zoom-out-up" data-aos-duration="1000">
+            <div class="hero-badge">The long awaited 2.0 update is here!</div>
+            <h1>Your Privacy, <br><span style="color: var(--primary);">Reinforced.</span></h1>
             <p>Securedly offers a comprehensive set of tools to protect your online identity. Generate secure passwords, check IP information, and encrypt sensitive data all in one place.</p>
-            <div class="hero-buttons">
-                <a href="tools/password.html" class="btn-primary">
-                    <i class="fas fa-key"></i> Password Generator
-                </a>
-                <a href="tools/ipinfo.html" class="btn-warning">
-                    <i class="fas fa-network-wired"></i> IP Information
-                </a>
-                <a href="tools/encryption.html" class="btn-info">
-                    <i class="fas fa-lock"></i> Data Encryption
-                </a>
+            <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+                <a href="tools/ipinfo.html" class="btn btn-primary">Get Started <i class="fas fa-bolt"></i></a>
+                <a href="#how-it-works" class="btn btn-glass">Learn More</a>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <section id="services" class="section">
-        <div class="container">
-            <div class="section-title">
+        <section class="stats-bar" data-aos="fade-up">
+            <div class="stat-item">
+                <h3 class="counter" data-target="100">0</h3>
+                <p>Passwords Generated</p>
+            </div>
+            <div class="stat-item">
+                <h3 class="counter" data-target="25">0</h3>
+                <p>IP Lookups</p>
+            </div>
+            <div class="stat-item">
+                <h3 class="counter" data-target="50">0</h3>
+                <p>Files Encrypted</p>
+            </div>
+        </section>
+
+        <section id="services">
+            <div class="section-header" data-aos="fade-up">
                 <h2>Our Security Tools</h2>
-                <p>Four powerful tools to enhance your online security and privacy</p>
+                <p>Powerful tools to enhance your online security and privacy</p>
             </div>
             
             <div class="services-grid">
-                <div class="service-card">
-                    <div class="service-icon icon-password">
-                        <i class="fas fa-key"></i>
-                    </div>
+                <div class="service-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="service-icon"><i class="fas fa-key"></i></div>
                     <h3>Password Generator</h3>
-                    <p>Create ultra-secure, unpredictable passwords using advanced entropy collection and cryptographic algorithms.</p>
-                    
+                    <p>Create ultra-secure, unpredictable passwords using advanced entropy collection and SHA-512 hashing.</p>
                     <ul class="service-features">
-                        <li><i class="fas fa-check"></i> Device fingerprinting for unique entropy</li>
+                        <li><i class="fas fa-check"></i> Device fingerprinting for entropy</li>
                         <li><i class="fas fa-check"></i> Mathematical chaos algorithms</li>
-                        <li><i class="fas fa-check"></i> SHA-512 cryptographic hashing</li>
                         <li><i class="fas fa-check"></i> Up to 256 character passwords</li>
-                        <li><i class="fas fa-check"></i> Real-time strength analysis</li>
                     </ul>
-                    
-                    <a href="tools/password.html" class="btn-primary">
-                        <i class="fas fa-bolt"></i> Generate Passwords
-                    </a>
+                    <a href="tools/password.html" class="btn btn-glass">Generate <i class="fas fa-arrow-right"></i></a>
                 </div>
-                
-                <div class="service-card">
-                    <div class="service-icon icon-ipinfo">
-                        <i class="fas fa-network-wired"></i>
-                    </div>
+
+                <div class="service-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="service-icon"><i class="fas fa-network-wired"></i></div>
                     <h3>IP Information</h3>
-                    <p>Discover what IP addresses reveal about connections and locations. Look up any IP or check your own with reliable geolocation data.</p>
-                    
+                    <p>Discover what IP addresses reveal about connections. Look up any IP or check your own geolocation.</p>
                     <ul class="service-features">
                         <li><i class="fas fa-check"></i> Accurate geolocation data</li>
                         <li><i class="fas fa-check"></i> ISP and organization details</li>
                         <li><i class="fas fa-check"></i> Interactive map visualization</li>
-                        <li><i class="fas fa-check"></i> Network and timezone information</li>
-                        <li><i class="fas fa-check"></i> Privacy insights and recommendations</li>
                     </ul>
-                    
-                    <a href="tools/ipinfo.html" class="btn-warning">
-                        <i class="fas fa-search"></i> Check IP Info
-                    </a>
+                    <a href="tools/ipinfo.html" class="btn btn-glass">Check IP <i class="fas fa-search"></i></a>
                 </div>
-                
-                <div class="service-card">
-                    <div class="service-icon icon-encryption">
-                        <i class="fas fa-lock"></i>
-                    </div>
-                    <h3>Data Encryption Tool</h3>
-                    <p>Encrypt and decrypt sensitive data using AES-256 encryption. Keep your messages and files secure with military-grade protection.</p>
-                    
+
+                <div class="service-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="service-icon"><i class="fas fa-lock"></i></div>
+                    <h3>Data Encryption</h3>
+                    <p>Encrypt sensitive data using AES-256 military-grade protection. Client-side processing only.</p>
                     <ul class="service-features">
                         <li><i class="fas fa-check"></i> AES-256 military-grade encryption</li>
-                        <li><i class="fas fa-check"></i> Text and file encryption/decryption</li>
-                        <li><i class="fas fa-check"></i> Password-based key derivation</li>
-                        <li><i class="fas fa-check"></i> Client-side processing only</li>
+                        <li><i class="fas fa-check"></i> File & Text encryption/decryption</li>
                         <li><i class="fas fa-check"></i> Secure key generation</li>
                     </ul>
-                    
-                    <a href="tools/encryption.html" class="btn-info">
-                        <i class="fas fa-shield-alt"></i> Encrypt Data
-                    </a>
+                    <a href="tools/encryption.html" class="btn btn-glass">Encrypt <i class="fas fa-shield-alt"></i></a>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <section class="stats">
-    <div class="container">
-        <div class="stats-grid">
-            <div class="stat-item">
-                <h3>100+</h3>
-                <p>Passwords Generated</p>
-            </div>
-            <div class="stat-item">
-                <h3>25+</h3>
-                <p>IP Lookups</p>
-            </div>
-            <div class="stat-item">
-                <h3>50+</h3>
-                <p>Files Encrypted</p>
-            </div>
-        </div>
-    </div>
-</section>
-
-    <section id="how-it-works" class="section">
-        <div class="container">
-            <div class="section-title">
+        <section id="how-it-works" style="margin-top: 100px;">
+            <div class="section-header" data-aos="fade-up">
                 <h2>How Securedly Works</h2>
                 <p>Our advanced security approach ensures maximum protection for your digital identity</p>
             </div>
-            
-            <div class="steps">
-                <div class="step">
-                    <div class="step-number">1</div>
-                    <div class="step-content">
-                        <h3>Advanced Entropy Collection</h3>
-                        <p>We gather hundreds of unique device and browser variables—screen size, CPU cores, memory, timezone, and more—to create a truly unique starting point for password generation.</p>
-                    </div>
-                </div>
-                
-                <div class="step">
-                    <div class="step-number">2</div>
-                    <div class="step-content">
-                        <h3>Network Intelligence</h3>
-                        <p>Our IP Information tool provides detailed insights about your network connection, location data, and privacy exposure to help you understand your digital footprint.</p>
-                    </div>
-                </div>
-                
-                <div class="step">
-                    <div class="step-number">3</div>
-                    <div class="step-content">
-                        <h3>Military-Grade Encryption</h3>
-                        <p>Our encryption tool uses AES-256, the same standard used by governments and security agencies worldwide to protect classified information.</p>
-                    </div>
-                </div>
-                
-                <div class="step">
-                    <div class="step-number">4</div>
-                    <div class="step-content">
-                        <h3>Comprehensive Security Suite</h3>
-                        <p>From password generation to IP analysis and data encryption, we provide all the essential tools you need for complete digital security.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
 
-    <section class="cta-section">
-        <div class="container">
-            <h2>Ready to Secure Your Digital Life?</h2>
-            <p>Join hundreds of users who trust Securedly for their password security, IP information, and data encryption needs.</p>
-            <div class="hero-buttons">
-                <a href="password.html" class="btn-primary">
-                    <i class="fas fa-key"></i> Get Started Now
-                </a>
-                <a href="#how-it-works" class="btn-secondary">
-                    <i class="fas fa-info-circle"></i> Learn More
-                </a>
+            <div class="steps-container">
+                <div class="step-card" data-aos="fade-right">
+                    <div class="step-num">1</div>
+                    <div>
+                        <h4>Advanced Entropy Collection</h4>
+                        <p>We gather hundreds of unique device and browser variables—screen size, CPU cores, memory, and more—to create a truly unique starting point for security tasks.</p>
+                    </div>
+                </div>
+                <div class="step-card" data-aos="fade-left">
+                    <div class="step-num">2</div>
+                    <div>
+                        <h4>Network Intelligence</h4>
+                        <p>Our IP Information tool provides detailed insights about your network connection and privacy exposure to help you understand your digital footprint.</p>
+                    </div>
+                </div>
+                <div class="step-card" data-aos="fade-right">
+                    <div class="step-num">3</div>
+                    <div>
+                        <h4>Military-Grade Encryption</h4>
+                        <p>Our encryption tool uses AES-256, the same standard used by governments worldwide to protect classified information.</p>
+                    </div>
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
+    </main>
 
     <footer>
         <div class="container">
-            <div class="footer-content">
-                <div class="footer-column">
-                    <h3>Securedly</h3>
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <a href="#" class="logo" style="margin-bottom: 1.5rem;">
+                        <i class="fas fa-shield-halved"></i>
+                        <span>Securedly</span>
+                    </a>
                     <p>Your complete security suite for password generation, IP lookup, data encryption, and more!</p>
                 </div>
-                
-                <div class="footer-column">
-                    <h3>Tools</h3>
-                    <ul class="footer-links">
-                        <li><a href="tools/password.html">Password Generator</a></li>
-                        <li><a href="tools/ipinfo.html">IP Information</a></li>
-                        <li><a href="tools/encryption.html">Data Encryption</a></li>
+                <div class="footer-col">
+                    <h4>Tools</h4>
+                    <ul>
+                        <li><a href="tools/password.html">Password Gen</a></li>
+                        <li><a href="tools/ipinfo.html">IP Info</a></li>
+                        <li><a href="tools/encryption.html">Encryption</a></li>
                     </ul>
                 </div>
-                
-                <div class="footer-column">
-                    <h3>Company</h3>
-                    <ul class="footer-links">
+                <div class="footer-col">
+                    <h4>Company</h4>
+                    <ul>
                         <li><a href="about.html">About Us</a></li>
-                        <li><a href="privacy.html">Privacy Policy</a></li>
-                        <li><a href="terms.html">Terms of Service</a></li>
+                        <li><a href="privacy.html">Privacy</a></li>
                         <li><a href="contact.html">Contact</a></li>
                     </ul>
                 </div>
-                
-                <div class="footer-column">
-                    <h3>Connect</h3>
-                    <ul class="footer-links">
+                <div class="footer-col">
+                    <h4>Connect</h4>
+                    <ul>
                         <li><a href="https://github.com/Atelloblue/Securedly"><i class="fab fa-github"></i> GitHub</a></li>
                         <li><a href="#"><i class="fab fa-discord"></i> Discord</a></li>
                     </ul>
                 </div>
             </div>
-            
-            <div class="copyright">
-                <p>&copy; 2026 Securedly. All rights reserved.</p>
-            </div>
+            <p style="text-align: center; color: #484f58; font-size: 0.8rem; border-top: 1px solid var(--border); padding-top: 30px;">
+                &copy; 2026 Securedly. All rights reserved. Professional Grade Privacy.
+            </p>
         </div>
     </footer>
 
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        // Mobile menu toggle
-        document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
-            document.querySelector('.nav-links').classList.toggle('active');
-        });
-        
-        // Simple stats counter animation
-        document.addEventListener('DOMContentLoaded', function() {
-            const statItems = document.querySelectorAll('.stat-item h3');
-            
-            statItems.forEach(stat => {
-                const targetText = stat.textContent.replace(/[^\d]/g, '');
-                const target = parseInt(targetText);
-                if (isNaN(target)) return;
-                
-                let current = 0;
-                const increment = target / 50;
-                const timer = setInterval(() => {
-                    current += increment;
-                    if (current >= target) {
-                        current = target;
-                        clearInterval(timer);
+        // Initialize Scroll Animations
+        AOS.init({ once: true, offset: 100 });
+
+        // Counter Animation
+        const counters = document.querySelectorAll('.counter');
+        const speed = 100;
+
+        const startCounters = () => {
+            counters.forEach(counter => {
+                const target = +counter.getAttribute('data-target');
+                const updateCount = () => {
+                    const count = +counter.innerText;
+                    const inc = target / speed;
+                    if (count < target) {
+                        counter.innerText = Math.ceil(count + inc);
+                        setTimeout(updateCount, 20);
+                    } else {
+                        counter.innerText = target + '+';
                     }
-                    stat.textContent = Math.floor(current).toLocaleString() + (stat.textContent.includes('%') ? '%' : '+');
-                }, 30);
+                };
+                updateCount();
             });
+        }
+
+        // Trigger counters when they appear on screen
+        const observer = new IntersectionObserver((entries) => {
+            if(entries[0].isIntersecting) {
+                startCounters();
+                observer.disconnect();
+            }
         });
+        observer.observe(document.querySelector('.stats-bar'));
     </script>
 </body>
 </html>
