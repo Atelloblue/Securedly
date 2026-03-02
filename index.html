@@ -178,7 +178,8 @@
 
         .services-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            /* Reduced min-width from 350px to 280px for better mobile scaling */
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 2rem;
             margin-bottom: 80px;
         }
@@ -298,6 +299,7 @@
         .footer-col ul a { color: #8b949e; text-decoration: none; transition: 0.3s; }
         .footer-col ul a:hover { color: var(--primary); }
 
+        /* --- Responsive Tweaks --- */
         @media (max-width: 992px) {
             .footer-grid { grid-template-columns: 1fr 1fr; }
         }
@@ -306,6 +308,21 @@
             .nav-links { display: none; }
             .hero h1 { font-size: 2.8rem; }
             .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
+            .stats-bar { padding: 30px 15px; }
+        }
+
+        /* Specific Mobile Card Width Optimization */
+        @media (max-width: 480px) {
+            .service-card {
+                padding: 1.5rem; /* Less padding to give text more width */
+                border-radius: 20px;
+            }
+            .section-header h2 {
+                font-size: 2rem;
+            }
+            .container {
+                padding: 0 16px;
+            }
         }
     </style>
 </head>
@@ -508,7 +525,9 @@
                 observer.disconnect();
             }
         });
-        observer.observe(document.querySelector('.stats-bar'));
+        if(document.querySelector('.stats-bar')) {
+            observer.observe(document.querySelector('.stats-bar'));
+        }
     </script>
 </body>
 </html>
