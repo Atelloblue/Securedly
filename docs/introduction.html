@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coming Soon | Securedly Docs</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #58a6ff;
+            --primary-glow: rgba(88, 166, 255, 0.4);
+            --accent: #79c0ff;
+            --background: #06090f;
+            --sidebar-bg: #0d1117;
+            --card-bg: rgba(22, 27, 34, 0.7);
+            --border: rgba(48, 54, 61, 0.8);
+            --text: #c9d1d9;
+            --text-white: #ffffff;
+            --glass: rgba(255, 255, 255, 0.03);
+            --sidebar-width: 280px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--background);
+            color: var(--text);
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .bg-glow {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: 
+                radial-gradient(circle at 10% 20%, rgba(88, 166, 255, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(31, 111, 235, 0.05) 0%, transparent 40%);
+        }
+
+        .sidebar {
+            width: var(--sidebar-width);
+            background-color: var(--sidebar-bg);
+            border-right: 1px solid var(--border);
+            height: 100vh;
+            padding: 2rem 1.5rem;
+            filter: blur(3px);
+            opacity: 0.4;
+            pointer-events: none;
+            user-select: none;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--text-white);
+            margin-bottom: 3rem;
+            text-decoration: none;
+        }
+
+        .brand i { 
+            color: var(--primary); 
+            filter: drop-shadow(0 0 8px var(--primary-glow));
+        }
+
+        .nav-group { margin-bottom: 2rem; }
+        .nav-label { 
+            font-size: 0.75rem; 
+            text-transform: uppercase; 
+            color: #8b949e; 
+            margin-bottom: 1rem; 
+            display: block; 
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+        
+        .nav-item { 
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 12px; 
+            color: var(--text); 
+            text-decoration: none; 
+            border-radius: 8px; 
+            font-size: 0.95rem; 
+            margin-bottom: 6px; 
+        }
+
+        .main-overlay {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            position: relative;
+            z-index: 10;
+        }
+
+        .hero-card {
+            max-width: 550px;
+            text-align: center;
+            background: var(--card-bg);
+            padding: 3.5rem 2.5rem;
+            border-radius: 24px;
+            border: 1px solid var(--border);
+            backdrop-filter: blur(12px);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(88, 166, 255, 0.1);
+            color: var(--primary);
+            padding: 8px 20px;
+            border-radius: 100px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(88, 166, 255, 0.2);
+        }
+
+        .pulse {
+            width: 8px;
+            height: 8px;
+            background-color: var(--primary);
+            border-radius: 50%;
+            box-shadow: 0 0 0 0 var(--primary-glow);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 var(--primary-glow); }
+            70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(88, 166, 255, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(88, 166, 255, 0); }
+        }
+
+        h1 { 
+            font-size: 2.8rem; 
+            color: var(--text-white); 
+            margin-bottom: 1.2rem;
+            letter-spacing: -1px;
+            line-height: 1.2;
+            background: linear-gradient(to bottom, #fff 30%, #8b949e 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        p { color: #8b949e; margin-bottom: 2.5rem; font-size: 1.1rem; line-height: 1.6; }
+
+        .subscribe-form {
+            display: flex;
+            gap: 12px;
+            margin-top: 2rem;
+        }
+
+        input[type="email"] {
+            flex: 1;
+            background: var(--glass);
+            border: 1px solid var(--border);
+            padding: 14px 18px;
+            border-radius: 12px;
+            color: var(--text-white);
+            outline: none;
+            font-family: inherit;
+            transition: 0.3s;
+        }
+
+        input[type="email"]:focus { border-color: var(--primary); background: rgba(255, 255, 255, 0.05); }
+
+        .btn-submit {
+            background-color: var(--primary);
+            color: #06090f;
+            border: none;
+            padding: 0 24px;
+            border-radius: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            white-space: nowrap;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            background: var(--accent);
+            box-shadow: 0 4px 15px var(--primary-glow);
+        }
+
+        .footer-links {
+            margin-top: 3.5rem;
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            font-size: 0.95rem;
+        }
+
+        .footer-links a { 
+            color: var(--text); 
+            text-decoration: none; 
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: 0.3s;
+        }
+        .footer-links a:hover { color: var(--primary); }
+
+        @media (max-width: 768px) {
+            .sidebar { display: none; }
+            .hero-card { padding: 2.5rem 1.5rem; background: transparent; border: none; box-shadow: none; }
+            .subscribe-form { flex-direction: column; }
+            .btn-submit { padding: 14px; }
+            h1 { font-size: 2.2rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-glow"></div>
+
+    <aside class="sidebar" aria-hidden="true">
+        <div class="brand">
+            <i class="fas fa-shield-halved"></i>
+            <span>Securedly</span>
+        </div>
+        
+        <div class="nav-group">
+            <span class="nav-label">General</span>
+            <div class="nav-item"><i class="fas fa-book"></i> Introduction</div>
+            <div class="nav-item"><i class="fas fa-rocket"></i> Quick Start</div>
+        </div>
+
+        <div class="nav-group">
+            <span class="nav-label">Security Tools</span>
+            <div class="nav-item"><i class="fas fa-key"></i> Password Gen</div>
+            <div class="nav-item"><i class="fas fa-network-wired"></i> IP Lookup</div>
+            <div class="nav-item"><i class="fas fa-lock"></i> Encryption</div>
+        </div>
+
+        <div class="nav-group">
+            <span class="nav-label">Resources</span>
+            <div class="nav-item"><i class="fas fa-shield-heart"></i> Best Practices</div>
+            <div class="nav-item"><i class="fas fa-code-pull-request"></i> Contribute</div>
+        </div>
+    </aside>
+
+    <main class="main-overlay">
+        <div class="hero-card">
+            <div class="status-badge">
+                <div class="pulse"></div>
+                Status: In Progress
+            </div>
+            
+            <h1>Documentation is <span style="color: var(--primary);">in the works.</span></h1>
+            <p>We're currently writing the guides for the Securedly suite. Join the waitlist to receive an alert as soon as they drop.</p>
+
+            <form class="subscribe-form" action="#" onsubmit="alert('Updates logged! We will reach out soon.'); return false;">
+                <input type="email" placeholder="Your email address" required aria-label="Email address">
+                <button type="submit" class="btn-submit">Notify Me</button>
+            </form>
+
+            <div class="footer-links">
+                <a href="https://github.com/Atelloblue/Securedly" target="_blank">
+                    <i class="fab fa-github"></i> GitHub
+                </a>
+                <a href="../index.html">
+                    <i class="fas fa-house"></i> Home
+                </a>
+                <a href="mailto:contact@securedly.com">
+                    <i class="fas fa-envelope"></i> Contact
+                </a>
+            </div>
+        </div>
+        
+        <p style="margin-top: 40px; font-size: 0.8rem; color: #484f58;">
+            &copy; 2026 Securedly. Professional Grade Privacy.
+        </p>
+    </main>
+
+</body>
+</html>
