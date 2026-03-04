@@ -5,464 +5,174 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Securedly - IP Information</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
         :root {
             --primary: #58a6ff;
-            --primary-dark: #1f6feb;
-            --success: #3fb950;
-            --warning: #d29922;
-            --danger: #da3633;
-            --background: #0d1117;
-            --card-bg: #161b22;
-            --border: #30363d;
+            --primary-glow: rgba(88, 166, 255, 0.4);
+            --accent: #79c0ff;
+            --background: #06090f;
+            --card-bg: rgba(22, 27, 34, 0.7);
+            --border: rgba(48, 54, 61, 0.8);
             --text: #c9d1d9;
-            --text-light: #8b949e;
-            --text-white: #f0f6fc;
-        }
-        
-        body {
-            font-family: 'Poppins', sans-serif;
-            background: var(--background);
-            color: var(--text);
-            line-height: 1.6;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-        
-        /* Header & Navigation */
-        header {
-            background: var(--card-bg);
-            border-bottom: 1px solid var(--border);
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-        }
-        
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 0;
-        }
-        
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--primary);
-            text-decoration: none;
-        }
-        
-        .logo i {
-            font-size: 1.8rem;
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            list-style: none;
-        }
-        
-        .nav-links a {
-            color: var(--text);
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.3s ease;
-        }
-        
-        .nav-links a:hover {
-            color: var(--primary);
-        }
-        
-        .nav-links a.active {
-            color: var(--primary);
-        }
-        
-        .mobile-menu-btn {
-            display: none;
-            background: transparent !important;
-            border: none !important;
-            color: var(--text) !important;
-            font-size: 1.5rem;
-            cursor: pointer;
-            padding: 8px 12px !important;
-            border-radius: 6px;
-            transition: all 0.3s ease;
-            box-shadow: none !important;
-            outline: none !important;
-        }
-        
-        .mobile-menu-btn:hover {
-            background: rgba(88, 166, 255, 0.1) !important;
-            color: var(--primary) !important;
-        }
-        
-        .mobile-menu-btn:focus {
-            outline: none !important;
-            box-shadow: none !important;
-        }
-        
-        .mobile-menu-btn i {
-            color: inherit !important;
-        }
-        
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                width: 100%;
-                background: var(--card-bg);
-                flex-direction: column;
-                padding: 1rem;
-                border-top: 1px solid var(--border);
-                z-index: 1001;
-            }
-            
-            .nav-links.active {
-                display: flex;
-            }
-            
-            .mobile-menu-btn {
-                display: block;
-                z-index: 1002;
-            }
+            --text-white: #ffffff;
+            --glass: rgba(255, 255, 255, 0.03);
+            --success: #3fb950;
+            --danger: #da3633;
+            --input-bg: rgba(1, 4, 9, 0.6);
         }
 
-        /* Hero Section */
-        .hero {
-            padding: 140px 0 80px;
-            text-align: center;
-            background: linear-gradient(135deg, var(--background) 0%, #0a0d12 100%);
-        }
-        
-        .hero h1 {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            background: linear-gradient(135deg, var(--text-white), var(--primary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            line-height: 1.2;
-        }
-        
-        .hero p {
-            font-size: 1.1rem;
-            color: var(--text-light);
-            max-width: 700px;
-            margin: 0 auto 2rem;
-            padding: 0 15px;
-        }
-        
-        .card {
-            background: var(--card-bg);
-            border-radius: 16px;
-            padding: 2rem;
-            border: 1px solid var(--border);
-            margin-bottom: 2rem;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-        }
-        
-        .card h2 {
-            color: var(--text-white);
-            margin-bottom: 1.5rem;
-            font-weight: 600;
-            font-size: 1.6rem;
-            text-align: center;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
-        
-        .ip-input-section {
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
             background: var(--background);
-            padding: 1.5rem;
-            border-radius: 12px;
-            border: 1px solid var(--border);
-            margin-bottom: 2rem;
-        }
-        
-        .input-group {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 1rem;
-        }
-        
-        .ip-input {
-            flex: 1;
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 0.75rem 1rem;
-            color: var(--text-white);
-            font-family: 'Poppins', sans-serif;
-            font-size: 1rem;
-        }
-        
-        .ip-input:focus {
-            outline: none;
-            border-color: var(--primary);
-        }
-        
-        .btn {
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            color: white;
-            border: none;
-            border-radius: 8px;
-            padding: 0.75rem 1.5rem;
-            font-family: 'Poppins', sans-serif;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(88, 166, 255, 0.3);
-        }
-        
-        .btn-secondary {
-            background: transparent;
-            border: 1px solid var(--border);
             color: var(--text);
+            overflow-x: hidden;
+            line-height: 1.6;
         }
-        
-        .btn-secondary:hover {
-            background: rgba(88, 166, 255, 0.1);
-            border-color: var(--primary);
-            color: var(--primary);
-            transform: translateY(-2px);
+
+        .bg-glow {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
+            background: 
+                radial-gradient(circle at 10% 20%, rgba(88, 166, 255, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(31, 111, 235, 0.05) 0%, transparent 40%);
         }
-        
+
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+
+        /* --- Header --- */
+        header {
+            background: rgba(13, 17, 23, 0.8);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            position: sticky; top: 0; z-index: 1000;
+        }
+
+        nav { display: flex; justify-content: space-between; align-items: center; padding: 1.2rem 0; }
+
+        .logo {
+            display: flex; align-items: center; gap: 12px;
+            font-size: 1.4rem; font-weight: 700; color: var(--text-white);
+            text-decoration: none;
+        }
+
+        .logo i { color: var(--primary); filter: drop-shadow(0 0 8px var(--primary-glow)); }
+
+        .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+        .nav-links a {
+            color: var(--text); text-decoration: none; font-size: 0.95rem;
+            font-weight: 500; transition: 0.3s;
+        }
+        .nav-links a:hover, .nav-links a.active { color: var(--primary); }
+
+        .btn-glass {
+            background: var(--glass); color: var(--text-white);
+            border: 1px solid var(--border); padding: 10px 20px;
+            border-radius: 12px; text-decoration: none; font-size: 0.85rem;
+            display: inline-flex; align-items: center; gap: 8px; transition: 0.3s;
+        }
+        .btn-glass:hover { border-color: var(--primary); background: rgba(255, 255, 255, 0.08); }
+
+        /* --- Hero --- */
+        .hero { padding: 80px 0 40px; text-align: center; }
+        .hero h1 {
+            font-size: clamp(2.5rem, 5vw, 3.5rem); font-weight: 800; margin-bottom: 1.5rem;
+            background: linear-gradient(to bottom, #fff 30%, #8b949e 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+
+        /* --- Tool Card --- */
+        .tool-card {
+            background: var(--card-bg); border: 1px solid var(--border);
+            border-radius: 24px; padding: 2.5rem; backdrop-filter: blur(10px);
+            position: relative; margin-bottom: 3rem;
+        }
+
+        .input-group { margin-bottom: 1.5rem; }
+        input[type="text"] {
+            width: 100%; background: var(--input-bg); border: 1px solid var(--border);
+            border-radius: 12px; padding: 14px; color: #fff; font-family: inherit; transition: 0.3s;
+        }
+        input:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 15px var(--primary-glow); }
+
+        /* --- Info Grid --- */
         .info-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-        
-        .info-item {
-            background: var(--background);
-            padding: 1.5rem;
-            border-radius: 12px;
-            border: 1px solid var(--border);
-        }
-        
-        .info-label {
-            color: var(--text-light);
-            font-size: 0.9rem;
-            margin-bottom: 0.5rem;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .info-value {
-            color: var(--text-white);
-            font-size: 1.1rem;
-            font-weight: 500;
-            word-break: break-all;
-        }
-        
-        .map-container {
-            height: 400px;
-            border-radius: 12px;
-            overflow: hidden;
-            border: 1px solid var(--border);
-            margin-top: 1.5rem;
-        }
-        
-        #ip-map {
-            height: 100%;
-            width: 100%;
-        }
-        
-        .loading {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 3rem;
-            text-align: center;
-        }
-        
-        .loading-spinner {
-            width: 50px;
-            height: 50px;
-            border: 4px solid rgba(88, 166, 255, 0.3);
-            border-top: 4px solid var(--primary);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin-bottom: 1rem;
-        }
-        
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        
-        .privacy-note {
-            background: rgba(88, 166, 255, 0.1);
-            border-left: 4px solid var(--primary);
-            padding: 1.5rem;
-            border-radius: 8px;
-            margin-top: 2rem;
-        }
-        
-        .privacy-note h4 {
-            color: var(--primary);
-            margin-bottom: 0.5rem;
-            font-size: 1.1rem;
-        }
-        
-        .privacy-note p {
-            color: var(--text-light);
-            margin-bottom: 0;
-            font-size: 0.9rem;
-        }
-        
-        .error-message {
-            background: rgba(218, 51, 51, 0.1);
-            border-left: 4px solid var(--danger);
-            padding: 1.5rem;
-            border-radius: 8px;
-            margin: 1rem 0;
-        }
-        
-        .error-message h4 {
-            color: var(--danger);
-            margin-bottom: 0.5rem;
-            font-size: 1.1rem;
-        }
-        
-        footer {
-            background: var(--card-bg);
-            border-top: 1px solid var(--border);
-            padding: 40px 0 20px;
-            margin-top: 40px;
-        }
-        
-        .footer-content {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 1.5rem;
-            margin-bottom: 2rem;
+            margin: 2rem 0;
         }
-        
-        .footer-column h3 {
-            color: var(--text-white);
-            margin-bottom: 1rem;
-            font-size: 1.1rem;
+
+        .info-item {
+            background: var(--glass);
+            padding: 1.5rem;
+            border-radius: 16px;
+            border: 1px solid var(--border);
         }
-        
-        .footer-links {
-            list-style: none;
+
+        .info-label { color: var(--primary); font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+        .info-value { color: var(--text-white); font-weight: 600; font-size: 1.1rem; word-break: break-all; }
+
+        /* --- Map --- */
+        .map-container {
+            height: 400px;
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            margin-top: 1.5rem;
+            z-index: 1;
         }
+        #ip-map { height: 100%; width: 100%; }
+
+        /* --- Buttons --- */
+        .action-btns { display: grid; grid-template-columns: 2fr 1fr; gap: 1rem; margin-top: 1rem; }
         
-        .footer-links li {
-            margin-bottom: 0.6rem;
+        .main-btn {
+            padding: 14px; border-radius: 12px; border: none; font-weight: 700;
+            cursor: pointer; display: flex; align-items: center; justify-content: center;
+            gap: 10px; transition: 0.3s; font-size: 0.95rem;
         }
-        
-        .footer-links a {
-            color: var(--text-light);
-            text-decoration: none;
-            transition: color 0.3s ease;
-            font-size: 0.9rem;
-        }
-        
-        .footer-links a:hover {
-            color: var(--primary);
-        }
-        
-        .copyright {
-            text-align: center;
-            padding-top: 1.5rem;
-            border-top: 1px solid var(--border);
-            color: var(--text-light);
-            font-size: 0.85rem;
-        }
-        
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2rem;
-            }
-            
-            .card {
-                padding: 1.5rem;
-            }
-            
-            .input-group {
-                flex-direction: column;
-            }
-            
-            .info-grid {
-                grid-template-columns: 1fr;
-                gap: 1rem;
-            }
-            
-            .map-container {
-                height: 300px;
-            }
-            
-            .hero p {
-                font-size: 1rem;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            .hero {
-                padding: 120px 0 60px;
-            }
-            
-            .hero h1 {
-                font-size: 1.8rem;
-            }
-            
-            .card {
-                padding: 1.25rem;
-                margin-bottom: 1.5rem;
-            }
-        }
-        
+        .btn-lookup { background: var(--primary); color: #0d1117; box-shadow: 0 4px 15px var(--primary-glow); }
+        .btn-myip { background: var(--glass); color: #fff; border: 1px solid var(--border); }
+        .main-btn:hover { transform: translateY(-2px); filter: brightness(1.1); }
+
+        /* --- Status Bar --- */
         .api-status {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-top: 10px;
-            font-size: 0.85rem;
-            color: var(--text-light);
+            margin-top: 15px; font-size: 0.8rem; display: flex; align-items: center; gap: 8px; color: #8b949e;
         }
-        
-        .api-status i {
-            font-size: 0.8rem;
+        .status-dot { width: 8px; height: 8px; border-radius: 50%; background: #484f58; }
+        .status-dot.success { background: var(--success); box-shadow: 0 0 8px var(--success); }
+
+        /* --- Loading Overlay --- */
+        .loader-overlay {
+            position: absolute; inset: 0; background: rgba(6, 9, 15, 0.8);
+            backdrop-filter: blur(4px); display: none; flex-direction: column;
+            align-items: center; justify-content: center; z-index: 10; border-radius: 24px;
         }
-        
-        .api-status .success {
-            color: var(--success);
+        .spinner {
+            width: 45px; height: 45px; border: 4px solid var(--border);
+            border-top-color: var(--primary); border-radius: 50%; animation: spin 1s linear infinite;
         }
-        
-        .api-status .error {
-            color: var(--danger);
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* --- Footer --- */
+        footer { padding: 80px 0 40px; border-top: 1px solid var(--border); margin-top: 100px; background: rgba(13, 17, 23, 0.5); }
+        .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 4rem; margin-bottom: 50px; }
+        .footer-col h4 { color: #fff; margin-bottom: 1.5rem; }
+        .footer-col ul { list-style: none; }
+        .footer-col ul li { margin-bottom: 10px; }
+        .footer-col ul a { color: #8b949e; text-decoration: none; transition: 0.3s; }
+        .footer-col ul a:hover { color: var(--primary); }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .action-btns { grid-template-columns: 1fr; }
+            .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
         }
     </style>
 </head>
@@ -478,17 +188,6 @@
                 </a>
                 <ul class="nav-links">
                     <li><a href="../index.html">Home</a></li>
-    <!-- Header -->
-    <header>
-        <div class="container">
-            <nav>
-                <a href="/index.html" class="logo">
-                    <i class="fas fa-shield-alt"></i>
-                    <span>Securedly</span>
-                </a>
-                
-                <ul class="nav-links">
-                    <li><a href="/index.html">Home</a></li>
                     <li><a href="password.html">Password Generator</a></li>
                     <li><a href="ipinfo.html" class="active">IP Information</a></li>
                     <li><a href="encryption.html">Data Encryption</a></li>
@@ -496,10 +195,6 @@
                 <a href="https://github.com/Atelloblue/Securedly" class="btn-glass">
                     <i class="fab fa-github"></i> GitHub
                 </a>
-                
-                <button class="mobile-menu-btn">
-                    <i class="fas fa-bars"></i>
-                </button>
             </nav>
         </div>
     </header>
@@ -658,293 +353,5 @@
         $('my-ip-btn').onclick = () => { $('ip-input').value = ''; fetchIPInfo(); };
         window.onload = () => fetchIPInfo();
     </script>
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="container">
-            <h1>IP Information Tool</h1>
-            <p>Discover what IP addresses reveal about connections and locations. Look up any IP or check your own.</p>
-        </div>
-    </section>
-
-    <div class="container">
-        <!-- IP Information Card -->
-        <div class="card">
-            <h2><i class="fas fa-network-wired"></i> IP Lookup Tool</h2>
-            
-            <div class="ip-input-section">
-                <div class="input-group">
-                    <input type="text" id="ip-input" class="ip-input" placeholder="Enter IP address (e.g., 8.8.8.8) or leave blank for your IP">
-                    <button id="lookup-btn" class="btn">
-                        <i class="fas fa-search"></i> Lookup IP
-                    </button>
-                </div>
-                <button id="my-ip-btn" class="btn-secondary">
-                    <i class="fas fa-user"></i> Show My IP
-                </button>
-                <div class="api-status" id="api-status">
-                    <i class="fas fa-circle status-icon"></i>
-                    <span class="status-text">Using primary API</span>
-                </div>
-            </div>
-            
-            <div id="loading" class="loading">
-                <div class="loading-spinner"></div>
-                <p>Retrieving IP information...</p>
-            </div>
-            
-            <div id="error-message" class="error-message" style="display: none;">
-                <h4><i class="fas fa-exclamation-triangle"></i> Error</h4>
-                <p id="error-text">Unable to retrieve IP information.</p>
-            </div>
-            
-            <div id="ip-info" style="display: none;">
-                <div class="info-grid">
-                    <div class="info-item">
-                        <div class="info-label">
-                            <i class="fas fa-globe"></i>
-                            IP Address
-                        </div>
-                        <div class="info-value" id="ip-address">-</div>
-                    </div>
-                    
-                    <div class="info-item">
-                        <div class="info-label">
-                            <i class="fas fa-map-marker-alt"></i>
-                            Location
-                        </div>
-                        <div class="info-value" id="location">-</div>
-                    </div>
-                    
-                    <div class="info-item">
-                        <div class="info-label">
-                            <i class="fas fa-building"></i>
-                            ISP / Provider
-                        </div>
-                        <div class="info-value" id="isp">-</div>
-                    </div>
-                    
-                    <div class="info-item">
-                        <div class="info-label">
-                            <i class="fas fa-clock"></i>
-                            Time Zone
-                        </div>
-                        <div class="info-value" id="timezone">-</div>
-                    </div>
-                </div>
-                
-                <h3 style="color: var(--text-white); margin: 2rem 0 1rem; display: flex; align-items: center; gap: 10px;">
-                    <i class="fas fa-map"></i> Approximate Location
-                </h3>
-                
-                <div class="map-container">
-                    <div id="ip-map"></div>
-                </div>
-                
-                <div class="privacy-note">
-                    <h4><i class="fas fa-user-shield"></i> Privacy Information</h4>
-                    <p>This tool shows information that websites can see when you visit them. IP addresses reveal approximate locations and internet providers. Consider using a VPN service to enhance your privacy online.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-column">
-                    <h3>Securedly</h3>
-                    <p>Your complete security suite for password generation, IP lookup, data encryption, and more!</p>
-                </div>
-                
-                <div class="footer-column">
-                    <h3>Tools</h3>
-                    <ul class="footer-links">
-                        <li><a href="password.html">Password Generator</a></li>
-                        <li><a href="ipinfo.html">IP Information</a></li>
-                        <li><a href="encryption.html">Data Encryption</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-column">
-                    <h3>Company</h3>
-                    <ul class="footer-links">
-                        <li><a href="/about.html">About Us</a></li>
-                        <li><a href="/privacy.html">Privacy Policy</a></li>
-                        <li><a href="/terms.html">Terms of Service</a></li>
-                        <li><a href="/contact.html">Contact</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-column">
-                    <h3>Connect</h3>
-                    <ul class="footer-links">
-                        <li><a href="https://github.com/Atelloblue/Securedly"><i class="fab fa-github"></i> GitHub</a></li>
-                        <li><a href="#"><i class="fab fa-discord"></i> Discord</a></li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div class="copyright">
-                <p>&copy; 2026 Securedly. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
-
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<script>
-    // Mobile menu toggle
-    document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
-        document.querySelector('.nav-links').classList.toggle('active');
-    });
-
-    document.addEventListener('DOMContentLoaded', function() {
-        const loading = document.getElementById('loading');
-        const ipInfo = document.getElementById('ip-info');
-        const error = document.getElementById('error-message');
-        const ipInput = document.getElementById('ip-input');
-        const lookupBtn = document.getElementById('lookup-btn');
-        const myIpBtn = document.getElementById('my-ip-btn');
-        const apiStatus = document.getElementById('api-status');
-        const statusIcon = apiStatus.querySelector('.status-icon');
-        const statusText = apiStatus.querySelector('.status-text');
-
-        let map = null;
-        let currentMarker = null;
-
-        // Initialize map
-        function initMap() {
-            if (map) map.remove();
-            map = L.map('ip-map').setView([0, 0], 2);
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            }).addTo(map);
-        }
-
-        initMap();
-
-        function updateApiStatus(status, message) {
-            if (status === 'success') {
-                statusIcon.className = 'fas fa-circle success';
-                statusText.textContent = message;
-                statusText.className = 'status-text success';
-            } else if (status === 'error') {
-                statusIcon.className = 'fas fa-circle error';
-                statusText.textContent = message;
-                statusText.className = 'status-text error';
-            } else {
-                statusIcon.className = 'fas fa-circle';
-                statusText.textContent = message;
-                statusText.className = 'status-text';
-            }
-        }
-
-        async function fetchIPInfo(ip = '') {
-            loading.style.display = 'flex';
-            ipInfo.style.display = 'none';
-            error.style.display = 'none';
-
-            const apiEndpoints = [
-                {
-                    name: 'ipwho.is',
-                    url: ip ? `https://ipwho.is/${ip}` : `https://ipwho.is/`,
-                    parser: data => ({
-                        ip: data.ip,
-                        country: data.country || 'Unknown',
-                        region: data.region || 'Unknown',
-                        city: data.city || 'Unknown',
-                        isp: data.connection?.isp || 'Unknown',
-                        timezone: data.timezone?.id || 'Unknown',
-                        lat: data.latitude,
-                        lon: data.longitude
-                    })
-                },
-                {
-                    name: 'ipwho.org',
-                    url: ip ? `https://ipwhois.app/json/${ip}` : `https://ipwhois.app/json/`,
-                    parser: data => ({
-                        ip: data.ip,
-                        country: data.country || 'Unknown',
-                        region: data.region || 'Unknown',
-                        city: data.city || 'Unknown',
-                        isp: data.isp || 'Unknown',
-                        timezone: data.timezone || 'Unknown',
-                        lat: data.latitude,
-                        lon: data.longitude
-                    })
-                },
-                {
-                    name: 'ipapi.co',
-                    url: ip ? `https://ipapi.co/${ip}/json/` : 'https://ipapi.co/json/',
-                    parser: data => ({
-                        ip: data.ip,
-                        country: data.country_name || 'Unknown',
-                        region: data.region || 'Unknown',
-                        city: data.city || 'Unknown',
-                        isp: data.org || 'Unknown',
-                        timezone: data.timezone || 'Unknown',
-                        lat: data.latitude,
-                        lon: data.longitude
-                    })
-                }
-            ];
-
-            for (let api of apiEndpoints) {
-                updateApiStatus('', `Trying ${api.name}...`);
-                try {
-                    const res = await fetch(api.url, { headers: { 'Accept': 'application/json' }, mode: 'cors' });
-                    if (!res.ok) continue;
-                    const data = await res.json();
-                    if (data.success === false || data.error || (data.status && data.status === 'fail')) continue;
-
-                    const parsed = api.parser(data);
-
-                    // Update UI: City, State, Country
-                    const locationText = `${parsed.city}, ${parsed.region}, ${parsed.country}`;
-                    document.getElementById('ip-address').textContent = parsed.ip || '-';
-                    document.getElementById('location').textContent = locationText;
-                    document.getElementById('isp').textContent = parsed.isp || '-';
-                    document.getElementById('timezone').textContent = parsed.timezone || '-';
-
-                    // Map
-                    if (parsed.lat && parsed.lon) {
-                        map.setView([parsed.lat, parsed.lon], 10);
-                        if (currentMarker) map.removeLayer(currentMarker);
-                        currentMarker = L.marker([parsed.lat, parsed.lon])
-                            .addTo(map)
-                            .bindPopup(`Approximate location: ${locationText}`)
-                            .openPopup();
-                    } else {
-                        map.setView([0, 0], 2);
-                        if (currentMarker) map.removeLayer(currentMarker);
-                        currentMarker = null;
-                    }
-
-                    ipInput.value = parsed.ip;
-
-                    loading.style.display = 'none';
-                    ipInfo.style.display = 'block';
-                    updateApiStatus('success', `Data from ${api.name}`);
-                    return;
-                } catch (err) {
-                    console.warn(`API ${api.name} failed:`, err.message);
-                }
-            }
-
-            // All APIs failed
-            loading.style.display = 'none';
-            error.style.display = 'block';
-            updateApiStatus('error', 'All APIs failed');
-            document.getElementById('error-text').textContent = 'Unable to retrieve IP information. Please check your connection.';
-        }
-
-        lookupBtn.addEventListener('click', () => fetchIPInfo(ipInput.value.trim()));
-        myIpBtn.addEventListener('click', () => { ipInput.value = ''; fetchIPInfo(); });
-        ipInput.addEventListener('keypress', e => { if (e.key === 'Enter') lookupBtn.click(); });
-
-        // Load user's IP by default
-        fetchIPInfo();
-    });
-</script>
 </body>
 </html>
