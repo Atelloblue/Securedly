@@ -716,6 +716,24 @@
             observer.observe(document.querySelector('.stats-bar'));
         }
 
+        // 4. Notification Toggle Logic
+        function toggleNotifs() {
+            const menu = document.getElementById('notifMenu');
+            const badge = document.getElementById('badge');
+
+            if (menu.style.display === 'block') {
+                menu.style.display = 'none';
+            } else {
+                menu.style.display = 'block';
+                if (badge) badge.style.display = 'none'; // Clear blue dot
+                
+                // Call external loader from notifications.js
+                if (typeof loadNotificationContent === "function") {
+                    loadNotificationContent();
+                }
+            }
+        }
+
         // Close menus when clicking outside
         window.onclick = function(event) {
             if (event.target.className === 'settings-overlay') {
@@ -724,7 +742,7 @@
         }
     </script>
 
-        <script src="notifications.js"></script> 
+    <script src="notifications.js"></script> 
 
-    </body>
+</body>
 </html>
