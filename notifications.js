@@ -1,31 +1,21 @@
-/** * Securedly Notification System
- * Handles dynamic loading and UI state for updates
+/**
+ * notifications.js
  */
 
 const notificationData = [
-    { title: "Version 2.0.4", text: "Encryption speed optimized by 40%.", time: "Just now" },
-    { title: "New Tool", text: "IP Reputation check is now in beta.", time: "2h ago" },
-    { title: "Security Tip", text: "Enable hardware entropy for stronger keys.", time: "Yesterday" }
+    { title: "Version 2.0.1", text: "Added notifications and settings.", time: "Just now" },
 ];
 
-function toggleNotifs() {
-    const menu = document.getElementById('notifMenu');
+function loadNotificationContent() {
     const content = document.getElementById('notifContent');
-    const badge = document.getElementById('badge');
+    if (!content) return;
 
-    if (menu.style.display === 'block') {
-        menu.style.display = 'none';
-    } else {
-        menu.style.display = 'block';
-        if(badge) badge.style.display = 'none'; // Hide badge when read
-        
-        // Load notifications dynamically
-        content.innerHTML = notificationData.map(n => `
-            <div class="notif-item">
-                <strong>${n.title}</strong>
-                ${n.text}
-                <div style="font-size: 0.7rem; color: #484f58; margin-top: 4px;">${n.time}</div>
-            </div>
-        `).join('');
-    }
+    // Map the data into HTML strings
+    content.innerHTML = notificationData.map(n => `
+        <div class="notif-item" style="padding: 10px; border-radius: 8px; font-size: 0.85rem; margin-bottom: 5px; border-bottom: 1px solid rgba(255,255,255,0.05);">
+            <strong style="color: #58a6ff; display: block;">${n.title}</strong>
+            <span style="color: #c9d1d9;">${n.text}</span>
+            <div style="font-size: 0.7rem; color: #484f58; margin-top: 4px;">${n.time}</div>
+        </div>
+    `).join('');
 }
