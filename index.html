@@ -38,6 +38,28 @@
             line-height: 1.6;
         }
 
+        /* --- UI Animations --- */
+        @keyframes ring {
+            0%, 100% { transform: rotate(0); }
+            25% { transform: rotate(15deg); }
+            75% { transform: rotate(-15deg); }
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes slideInDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes modalBounce {
+            from { opacity: 0; transform: scale(0.8) translateY(100px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
         .bg-glow {
             position: fixed;
             top: 0;
@@ -105,6 +127,108 @@
 
         .nav-links a:hover, .nav-links a.active { color: var(--primary); }
 
+        /* --- Header Icons & Actions --- */
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .icon-action {
+            color: var(--text);
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: 0.3s;
+            position: relative;
+        }
+
+        .icon-action:hover { color: var(--primary); }
+        .icon-action:hover .fa-bell { animation: ring 0.5s ease; }
+        .icon-action:hover .fa-cog { animation: spin 2s linear infinite; }
+
+        .notif-badge {
+            position: absolute;
+            top: -2px;
+            right: -2px;
+            width: 8px;
+            height: 8px;
+            background: var(--primary);
+            border-radius: 50%;
+            border: 2px solid #0d1117;
+        }
+
+        /* --- Notification Dropdown --- */
+        .notif-menu {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            width: 300px;
+            background: #0d1117;
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1rem;
+            margin-top: 15px;
+            display: none;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            animation: slideInDown 0.3s ease;
+            z-index: 1001;
+        }
+
+        .notif-header {
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 10px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: var(--text-white);
+        }
+
+        .notif-list { max-height: 300px; overflow-y: auto; }
+        .notif-item {
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            margin-bottom: 5px;
+            text-align: left;
+        }
+        .notif-item:hover { background: var(--glass); }
+        .notif-item strong { color: var(--primary); display: block; }
+
+        /* --- Settings Menu --- */
+        .settings-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(8px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+
+        .settings-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 32px;
+            width: 90%;
+            max-width: 450px;
+            padding: 40px;
+            text-align: center;
+            animation: modalBounce 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .settings-card h2 { margin-bottom: 20px; color: #fff; }
+        .setting-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
         /* --- Hero --- */
         .hero {
             padding: 100px 0 80px;
@@ -150,6 +274,8 @@
             display: inline-flex;
             align-items: center;
             gap: 10px;
+            cursor: pointer;
+            border: none;
         }
 
         .btn-primary {
@@ -178,7 +304,6 @@
 
         .services-grid {
             display: grid;
-            /* Reduced min-width from 350px to 280px for better mobile scaling */
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 2rem;
             margin-bottom: 80px;
@@ -192,6 +317,7 @@
             transition: 0.4s;
             display: flex;
             flex-direction: column;
+            text-align: left;
         }
 
         .service-card:hover {
@@ -247,7 +373,7 @@
         .stat-item h3 { font-size: 2.8rem; color: #fff; margin-bottom: 5px; }
         .stat-item p { color: var(--primary); font-weight: 600; text-transform: uppercase; letter-spacing: 1px; font-size: 0.8rem; }
 
-        /* --- Steps / How it Works --- */
+        /* --- Steps --- */
         .steps-container {
             max-width: 900px;
             margin: 0 auto;
@@ -263,6 +389,7 @@
             display: flex;
             gap: 20px;
             align-items: flex-start;
+            text-align: left;
         }
 
         .step-num {
@@ -299,10 +426,33 @@
         .footer-col ul a { color: #8b949e; text-decoration: none; transition: 0.3s; }
         .footer-col ul a:hover { color: var(--primary); }
 
-        /* --- Responsive Tweaks --- */
-        @media (max-width: 992px) {
-            .footer-grid { grid-template-columns: 1fr 1fr; }
+        /* --- Custom Switches --- */
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 40px;
+            height: 20px;
         }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: #30363d;
+            transition: .4s;
+            border-radius: 20px;
+        }
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 14px; width: 14px;
+            left: 3px; bottom: 3px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        input:checked + .slider { background-color: var(--primary); }
+        input:checked + .slider:before { transform: translateX(20px); }
 
         @media (max-width: 768px) {
             .nav-links { display: none; }
@@ -310,24 +460,41 @@
             .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
             .stats-bar { padding: 30px 15px; }
         }
-
-        /* Specific Mobile Card Width Optimization */
-        @media (max-width: 480px) {
-            .service-card {
-                padding: 1.5rem; /* Less padding to give text more width */
-                border-radius: 20px;
-            }
-            .section-header h2 {
-                font-size: 2rem;
-            }
-            .container {
-                padding: 0 16px;
-            }
-        }
     </style>
 </head>
 <body>
     <div class="bg-glow"></div>
+
+    <div class="settings-overlay" id="settingsMenu">
+        <div class="settings-card">
+            <i class="fas fa-cog fa-2x" style="color: var(--primary); margin-bottom: 15px;"></i>
+            <h2>System Preferences</h2>
+            
+            <div class="setting-row">
+                <span>Safe Search Encryption</span>
+                <label class="switch">
+                    <input type="checkbox" checked>
+                    <span class="slider"></span>
+                </label>
+            </div>
+            <div class="setting-row">
+                <span>Advanced UI Animations</span>
+                <label class="switch">
+                    <input type="checkbox" checked id="animToggle">
+                    <span class="slider"></span>
+                </label>
+            </div>
+            <div class="setting-row">
+                <span>Local Data Cache</span>
+                <label class="switch">
+                    <input type="checkbox">
+                    <span class="slider"></span>
+                </label>
+            </div>
+
+            <button class="btn btn-primary" style="margin-top: 30px; width: 100%; justify-content: center;" onclick="toggleSettings()">Save & Close</button>
+        </div>
+    </div>
 
     <header>
         <div class="container">
@@ -342,9 +509,23 @@
                     <li><a href="tools/ipinfo.html">IP Information</a></li>
                     <li><a href="tools/encryption.html">Data Encryption</a></li>
                 </ul>
-                <a href="https://github.com/Atelloblue/Securedly" class="btn btn-glass" style="padding: 10px 20px; font-size: 0.85rem;">
-                    <i class="fab fa-github"></i> GitHub
-                </a>
+
+                <div class="header-actions">
+                    <div class="icon-action" onclick="toggleNotifs()">
+                        <i class="fas fa-bell"></i>
+                        <span class="notif-badge" id="badge"></span>
+                        
+                        <div class="notif-menu" id="notifMenu">
+                            <div class="notif-header">Recent Updates</div>
+                            <div class="notif-list" id="notifContent">
+                                </div>
+                        </div>
+                    </div>
+
+                    <div class="icon-action" onclick="toggleSettings()">
+                        <i class="fas fa-cog"></i>
+                    </div>
+                </div>
             </nav>
         </div>
     </header>
@@ -431,21 +612,21 @@
                     <div class="step-num">1</div>
                     <div>
                         <h4>Advanced Entropy Collection</h4>
-                        <p>We gather hundreds of unique device and browser variables—screen size, CPU cores, memory, and more—to create a truly unique starting point for security tasks.</p>
+                        <p>We gather hundreds of unique device and browser variables to create a truly unique starting point for security tasks.</p>
                     </div>
                 </div>
                 <div class="step-card" data-aos="fade-left">
                     <div class="step-num">2</div>
                     <div>
                         <h4>Network Intelligence</h4>
-                        <p>Our IP Information tool provides detailed insights about your network connection and privacy exposure to help you understand your digital footprint.</p>
+                        <p>Our IP Information tool provides detailed insights about your network connection and privacy exposure.</p>
                     </div>
                 </div>
                 <div class="step-card" data-aos="fade-right">
                     <div class="step-num">3</div>
                     <div>
                         <h4>Military-Grade Encryption</h4>
-                        <p>Our encryption tool uses AES-256, the same standard used by governments worldwide to protect classified information.</p>
+                        <p>Our encryption tool uses AES-256, the same standard used by governments worldwide.</p>
                     </div>
                 </div>
             </div>
@@ -494,10 +675,16 @@
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        // Initialize Scroll Animations
+        // 1. Initialize Scroll Animations
         AOS.init({ once: true, offset: 100 });
 
-        // Counter Animation
+        // 2. Settings Menu Logic
+        function toggleSettings() {
+            const settings = document.getElementById('settingsMenu');
+            settings.style.display = (settings.style.display === 'flex') ? 'none' : 'flex';
+        }
+
+        // 3. Counter Animation Logic
         const counters = document.querySelectorAll('.counter');
         const speed = 100;
 
@@ -518,7 +705,7 @@
             });
         }
 
-        // Trigger counters when they appear on screen
+        // Trigger counters on intersection
         const observer = new IntersectionObserver((entries) => {
             if(entries[0].isIntersecting) {
                 startCounters();
@@ -528,6 +715,34 @@
         if(document.querySelector('.stats-bar')) {
             observer.observe(document.querySelector('.stats-bar'));
         }
+
+        // 4. Notification Toggle Logic
+        function toggleNotifs() {
+            const menu = document.getElementById('notifMenu');
+            const badge = document.getElementById('badge');
+
+            if (menu.style.display === 'block') {
+                menu.style.display = 'none';
+            } else {
+                menu.style.display = 'block';
+                if (badge) badge.style.display = 'none'; // Clear blue dot
+                
+                // Call external loader from notifications.js
+                if (typeof loadNotificationContent === "function") {
+                    loadNotificationContent();
+                }
+            }
+        }
+
+        // Close menus when clicking outside
+        window.onclick = function(event) {
+            if (event.target.className === 'settings-overlay') {
+                toggleSettings();
+            }
+        }
     </script>
+
+    <script src="notifications.js"></script> 
+
 </body>
 </html>
