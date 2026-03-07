@@ -3,7 +3,7 @@
  */
 
 const notificationData = [
-    { title: "Version 2.0.1", text: "Added notifications and settings.", time: "Just now" },
+    { title: "Version 2.0.1", text: "Added notifications and settings.", time: "Just now" }
 ];
 
 function loadNotificationContent() {
